@@ -393,9 +393,30 @@ const Index = () => {
 
         {activeTab === 'centers' && (
           <div className="space-y-4 animate-fade-in">
-            <div className="relative">
-              <div className="bg-muted rounded-lg h-48 flex items-center justify-center">
-                <Icon name="Map" size={48} className="text-muted-foreground" />
+            <div className="relative overflow-hidden rounded-lg h-64 bg-gradient-to-br from-blue-50 to-blue-100">
+              <div className="absolute inset-0">
+                <svg viewBox="0 0 400 300" className="w-full h-full">
+                  <rect x="0" y="0" width="400" height="300" fill="#E5E7EB" />
+                  
+                  <path d="M 50 150 Q 100 100 150 120 T 250 140 T 350 160" stroke="#CBD5E1" strokeWidth="3" fill="none" />
+                  <path d="M 80 200 Q 150 180 220 190 T 340 210" stroke="#CBD5E1" strokeWidth="2" fill="none" />
+                  <path d="M 30 100 L 370 100" stroke="#CBD5E1" strokeWidth="2" fill="none" />
+                  <path d="M 30 220 L 370 240" stroke="#CBD5E1" strokeWidth="2" fill="none" />
+                  
+                  <circle cx="120" cy="140" r="8" fill="#DC2626" stroke="white" strokeWidth="2" />
+                  <circle cx="200" cy="160" r="8" fill="#DC2626" stroke="white" strokeWidth="2" />
+                  <circle cx="280" cy="120" r="8" fill="#DC2626" stroke="white" strokeWidth="2" />
+                  
+                  <circle cx="200" cy="160" r="25" fill="#2563EB" fillOpacity="0.2" stroke="#2563EB" strokeWidth="1" strokeDasharray="2,2" />
+                  
+                  <text x="120" y="175" fontSize="10" fill="#374151" textAnchor="middle" fontWeight="600">СК Олимпийский</text>
+                  <text x="200" y="195" fontSize="10" fill="#374151" textAnchor="middle" fontWeight="600">СЦ Энергия</text>
+                  <text x="280" y="155" fontSize="10" fill="#374151" textAnchor="middle" fontWeight="600">Стадион Локомотив</text>
+                </svg>
+              </div>
+              <div className="absolute top-3 left-3 bg-white rounded-lg shadow-md px-3 py-2 flex items-center gap-2">
+                <Icon name="MapPin" size={16} className="text-primary" />
+                <span className="text-xs font-medium">Москва</span>
               </div>
             </div>
 
@@ -407,9 +428,9 @@ const Index = () => {
               <div className="space-y-3">
                 {testCenters.map(center => (
                   <div key={center.id} className="p-4 bg-muted/50 rounded-lg hover-scale cursor-pointer">
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-medium">{center.name}</h4>
-                      <Badge variant="secondary">{center.distance}</Badge>
+                    <div className="flex justify-between items-start mb-2 gap-3">
+                      <h4 className="font-medium flex-1">{center.name}</h4>
+                      <Badge variant="secondary" className="whitespace-nowrap flex-shrink-0">{center.distance}</Badge>
                     </div>
                     <p className="text-sm text-muted-foreground flex items-center gap-1">
                       <Icon name="MapPin" size={14} />
