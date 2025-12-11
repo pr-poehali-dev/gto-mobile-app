@@ -7,12 +7,15 @@ import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
+import { createStandards, getAllStages } from '@/data/gtoStandards';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [selectedAge, setSelectedAge] = useState<number | null>(null);
   const [selectedGender, setSelectedGender] = useState<'male' | 'female'>('male');
+  const [selectedStageNumber, setSelectedStageNumber] = useState<number | null>(null);
+  const [showAllStages, setShowAllStages] = useState(false);
 
   const getStageByAge = (age: number): { number: number; name: string; ageRange: string } => {
     const stages = [
@@ -51,9 +54,17 @@ const Index = () => {
     progress: 75,
   };
 
-  const currentStage = isAuthorized ? userData.stage : (selectedAge ? getStageByAge(selectedAge) : null);
+  const currentStage = isAuthorized 
+    ? userData.stage 
+    : (showAllStages && selectedStageNumber 
+      ? getAllStages().find(s => s.number === selectedStageNumber)!
+      : (selectedAge ? getStageByAge(selectedAge) : null));
 
   const getStandardsByStage = (stageNumber: number, gender: 'male' | 'female') => {
+    return createStandards(stageNumber, gender);
+  };
+
+  const getStandardsByStageOld = (stageNumber: number, gender: 'male' | 'female') => {
     const standardsMap: Record<number, any> = {
       9: {
         required: [
@@ -415,36 +426,89 @@ const Index = () => {
           <div className="space-y-4 animate-fade-in">
             {!isAuthorized && (
               <Card className="p-4">
-                <h3 className="font-semibold mb-3">Выберите возраст и пол</h3>
-                <div className="grid grid-cols-2 gap-3 mb-3">
-                  <div>
-                    <label className="text-xs text-muted-foreground mb-1 block">Возраст</label>
-                    <Select value={selectedAge?.toString() || ''} onValueChange={(v) => setSelectedAge(parseInt(v))}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Ваш возраст" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Array.from({ length: 65 }, (_, i) => i + 6).map(age => (
-                          <SelectItem key={age} value={age.toString()}>
-                            {age} {age === 1 ? 'год' : age < 5 ? 'года' : 'лет'}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <label className="text-xs text-muted-foreground mb-1 block">Пол</label>
-                    <Select value={selectedGender} onValueChange={(v: 'male' | 'female') => setSelectedGender(v)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="male">Мужской</SelectItem>
-                        <SelectItem value="female">Женский</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold">Выберите параметры</h3>
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => {
+                      setShowAllStages(!showAllStages);
+                      if (!showAllStages) {
+                        setSelectedAge(null);
+                      } else {
+                        setSelectedStageNumber(null);
+                      }
+                    }}
+                    className="text-xs"
+                  >
+                    {showAllStages ? 'По возрасту' : 'Все ступени'}
+                  </Button>
                 </div>
+                
+                {showAllStages ? (
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    <div>
+                      <label className="text-xs text-muted-foreground mb-1 block">Ступень</label>
+                      <Select 
+                        value={selectedStageNumber?.toString() || ''} 
+                        onValueChange={(v) => setSelectedStageNumber(parseInt(v))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберите ступень" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {getAllStages().map(stage => (
+                            <SelectItem key={stage.number} value={stage.number.toString()}>
+                              {stage.name} ({stage.ageRange})
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="text-xs text-muted-foreground mb-1 block">Пол</label>
+                      <Select value={selectedGender} onValueChange={(v: 'male' | 'female') => setSelectedGender(v)}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="male">Мужской</SelectItem>
+                          <SelectItem value="female">Женский</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    <div>
+                      <label className="text-xs text-muted-foreground mb-1 block">Возраст</label>
+                      <Select value={selectedAge?.toString() || ''} onValueChange={(v) => setSelectedAge(parseInt(v))}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Ваш возраст" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Array.from({ length: 65 }, (_, i) => i + 6).map(age => (
+                            <SelectItem key={age} value={age.toString()}>
+                              {age} {age === 1 ? 'год' : age < 5 ? 'года' : 'лет'}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <label className="text-xs text-muted-foreground mb-1 block">Пол</label>
+                      <Select value={selectedGender} onValueChange={(v: 'male' | 'female') => setSelectedGender(v)}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="male">Мужской</SelectItem>
+                          <SelectItem value="female">Женский</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                )}
               </Card>
             )}
 
@@ -549,12 +613,14 @@ const Index = () => {
               </>
             )}
 
-            {!isAuthorized && !selectedAge && (
+            {!isAuthorized && !selectedAge && !selectedStageNumber && (
               <Card className="p-8 text-center">
                 <Icon name="Target" size={48} className="mx-auto mb-4 text-muted-foreground" />
                 <h3 className="font-semibold text-lg mb-2">Нормативы ГТО</h3>
                 <p className="text-sm text-muted-foreground">
-                  Выберите возраст и пол для просмотра нормативов
+                  {showAllStages 
+                    ? 'Выберите ступень и пол для просмотра нормативов'
+                    : 'Выберите возраст и пол для просмотра нормативов'}
                 </p>
               </Card>
             )}
