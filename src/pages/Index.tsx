@@ -4,34 +4,168 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [selectedAge, setSelectedAge] = useState<number | null>(null);
+  const [selectedGender, setSelectedGender] = useState<'male' | 'female'>('male');
+
+  const getStageByAge = (age: number): { number: number; name: string; ageRange: string } => {
+    const stages = [
+      { number: 1, name: 'I ступень', ageRange: '6-7 лет', minAge: 6, maxAge: 7 },
+      { number: 2, name: 'II ступень', ageRange: '8-9 лет', minAge: 8, maxAge: 9 },
+      { number: 3, name: 'III ступень', ageRange: '10-11 лет', minAge: 10, maxAge: 11 },
+      { number: 4, name: 'IV ступень', ageRange: '12-13 лет', minAge: 12, maxAge: 13 },
+      { number: 5, name: 'V ступень', ageRange: '14-15 лет', minAge: 14, maxAge: 15 },
+      { number: 6, name: 'VI ступень', ageRange: '16-17 лет', minAge: 16, maxAge: 17 },
+      { number: 7, name: 'VII ступень', ageRange: '18-19 лет', minAge: 18, maxAge: 19 },
+      { number: 8, name: 'VIII ступень', ageRange: '20-24 лет', minAge: 20, maxAge: 24 },
+      { number: 9, name: 'IX ступень', ageRange: '25-29 лет', minAge: 25, maxAge: 29 },
+      { number: 10, name: 'X ступень', ageRange: '30-34 лет', minAge: 30, maxAge: 34 },
+      { number: 11, name: 'XI ступень', ageRange: '35-39 лет', minAge: 35, maxAge: 39 },
+      { number: 12, name: 'XII ступень', ageRange: '40-44 лет', minAge: 40, maxAge: 44 },
+      { number: 13, name: 'XIII ступень', ageRange: '45-49 лет', minAge: 45, maxAge: 49 },
+      { number: 14, name: 'XIV ступень', ageRange: '50-54 лет', minAge: 50, maxAge: 54 },
+      { number: 15, name: 'XV ступень', ageRange: '55-59 лет', minAge: 55, maxAge: 59 },
+      { number: 16, name: 'XVI ступень', ageRange: '60-64 лет', minAge: 60, maxAge: 64 },
+      { number: 17, name: 'XVII ступень', ageRange: '65-69 лет', minAge: 65, maxAge: 69 },
+      { number: 18, name: 'XVIII ступень', ageRange: '70+ лет', minAge: 70, maxAge: 120 },
+    ];
+
+    const stage = stages.find(s => age >= s.minAge && age <= s.maxAge);
+    return stage || stages[8];
+  };
 
   const userData = {
     name: 'Иванов Иван Иванович',
     birthDate: '15.03.1995',
     age: 29,
-    stage: 'V ступень',
+    stage: getStageByAge(29),
     uin: '1234567890',
     gender: 'Мужской',
     badges: ['Золото 2023', 'Серебро 2022'],
     progress: 75,
   };
 
+  const currentStage = isAuthorized ? userData.stage : (selectedAge ? getStageByAge(selectedAge) : null);
+
+  const getStandardsByStage = (stageNumber: number, gender: 'male' | 'female') => {
+    const standardsMap: Record<number, any> = {
+      9: {
+        required: [
+          {
+            name: 'Скоростные возможности',
+            type: 'Обязательное',
+            options: [
+              {
+                discipline: 'Бег 60 м',
+                gold: gender === 'male' ? '8.1 сек' : '9.6 сек',
+                silver: gender === 'male' ? '9.0 сек' : '10.5 сек',
+                bronze: gender === 'male' ? '9.6 сек' : '11.0 сек'
+              },
+              {
+                discipline: 'Бег 100 м',
+                gold: gender === 'male' ? '13.6 сек' : '16.0 сек',
+                silver: gender === 'male' ? '14.6 сек' : '17.1 сек',
+                bronze: gender === 'male' ? '15.3 сек' : '18.0 сек'
+              }
+            ]
+          },
+          {
+            name: 'Силовые возможности',
+            type: 'Обязательное',
+            options: [
+              {
+                discipline: gender === 'male' ? 'Подтягивание' : 'Отжимание',
+                gold: gender === 'male' ? '13 раз' : '14 раз',
+                silver: gender === 'male' ? '10 раз' : '11 раз',
+                bronze: gender === 'male' ? '7 раз' : '8 раз'
+              },
+              {
+                discipline: 'Рывок гири 16 кг',
+                gold: gender === 'male' ? '35 раз' : '25 раз',
+                silver: gender === 'male' ? '25 раз' : '18 раз',
+                bronze: gender === 'male' ? '18 раз' : '12 раз'
+              }
+            ]
+          },
+          {
+            name: 'Выносливость',
+            type: 'Обязательное',
+            options: [
+              {
+                discipline: 'Бег 2 км',
+                gold: gender === 'male' ? '8:10 мин' : '10:20 мин',
+                silver: gender === 'male' ? '9:20 мин' : '11:35 мин',
+                bronze: gender === 'male' ? '10:00 мин' : '12:40 мин'
+              },
+              {
+                discipline: 'Бег 3 км',
+                gold: gender === 'male' ? '13:00 мин' : '—',
+                silver: gender === 'male' ? '14:30 мин' : '—',
+                bronze: gender === 'male' ? '15:40 мин' : '—'
+              }
+            ]
+          }
+        ],
+        choice: [
+          {
+            name: 'Гибкость',
+            type: 'По выбору',
+            options: [
+              {
+                discipline: 'Наклон вперед',
+                gold: gender === 'male' ? '+13 см' : '+16 см',
+                silver: gender === 'male' ? '+8 см' : '+11 см',
+                bronze: gender === 'male' ? '+6 см' : '+8 см'
+              }
+            ]
+          },
+          {
+            name: 'Скоростно-силовые',
+            type: 'По выбору',
+            options: [
+              {
+                discipline: 'Прыжок в длину',
+                gold: gender === 'male' ? '230 см' : '195 см',
+                silver: gender === 'male' ? '215 см' : '180 см',
+                bronze: gender === 'male' ? '200 см' : '170 см'
+              },
+              {
+                discipline: 'Метание мяча',
+                gold: gender === 'male' ? '37 м' : '23 м',
+                silver: gender === 'male' ? '33 м' : '20 м',
+                bronze: gender === 'male' ? '30 м' : '17 м'
+              }
+            ]
+          },
+          {
+            name: 'Прикладные навыки',
+            type: 'По выбору',
+            options: [
+              {
+                discipline: 'Плавание 50 м',
+                gold: gender === 'male' ? '50 сек' : '1:05 мин',
+                silver: gender === 'male' ? '1:00 мин' : '1:15 мин',
+                bronze: gender === 'male' ? '1:10 мин' : '1:28 мин'
+              }
+            ]
+          }
+        ]
+      }
+    };
+
+    return standardsMap[stageNumber] || standardsMap[9];
+  };
+
   const testCenters = [
     { id: 1, name: 'СК "Олимпийский"', address: 'ул. Ленина, 45', distance: '1.2 км' },
     { id: 2, name: 'Спортивный центр "Энергия"', address: 'пр. Победы, 12', distance: '2.5 км' },
     { id: 3, name: 'Стадион "Локомотив"', address: 'ул. Спортивная, 8', distance: '3.8 км' },
-  ];
-
-  const standards = [
-    { name: 'Бег 100м', men: '13.1 сек', women: '16.0 сек', type: 'Обязательное' },
-    { name: 'Подтягивание', men: '13 раз', women: '11 раз', type: 'Обязательное' },
-    { name: 'Прыжок в длину', men: '230 см', women: '195 см', type: 'По выбору' },
-    { name: 'Плавание 50м', men: '50 сек', women: '1:05 мин', type: 'По выбору' },
   ];
 
   const news = [
@@ -167,7 +301,8 @@ const Index = () => {
                       <h2 className="text-xl font-bold">{userData.name}</h2>
                       <div className="mt-2 space-y-1 text-sm text-muted-foreground">
                         <p>Дата рождения: {userData.birthDate}</p>
-                        <p>Возраст: {userData.age} лет • {userData.stage}</p>
+                        <p>Возраст: {userData.age} лет</p>
+                        <p className="font-medium text-primary">{userData.stage.name} ({userData.stage.ageRange})</p>
                         <p>УИН: {userData.uin}</p>
                       </div>
                     </div>
@@ -278,40 +413,151 @@ const Index = () => {
 
         {activeTab === 'standards' && (
           <div className="space-y-4 animate-fade-in">
-            <Card className="p-4">
-              <div className="flex items-center gap-2 mb-4">
-                <Icon name="Target" size={20} className="text-primary" />
-                <h3 className="font-semibold">V ступень (25-29 лет)</h3>
-              </div>
-              <p className="text-sm text-muted-foreground mb-4">
-                Для получения знака отличия необходимо выполнить 3 обязательных испытания и 2 по выбору
-              </p>
-            </Card>
+            {!isAuthorized && (
+              <Card className="p-4">
+                <h3 className="font-semibold mb-3">Выберите возраст и пол</h3>
+                <div className="grid grid-cols-2 gap-3 mb-3">
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">Возраст</label>
+                    <Select value={selectedAge?.toString() || ''} onValueChange={(v) => setSelectedAge(parseInt(v))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Ваш возраст" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Array.from({ length: 65 }, (_, i) => i + 6).map(age => (
+                          <SelectItem key={age} value={age.toString()}>
+                            {age} {age === 1 ? 'год' : age < 5 ? 'года' : 'лет'}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">Пол</label>
+                    <Select value={selectedGender} onValueChange={(v: 'male' | 'female') => setSelectedGender(v)}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="male">Мужской</SelectItem>
+                        <SelectItem value="female">Женский</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </Card>
+            )}
 
-            <div className="space-y-3">
-              {standards.map((standard, i) => (
-                <Card key={i} className="p-4">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h4 className="font-medium">{standard.name}</h4>
-                      <Badge variant="outline" className="mt-1 text-xs">
-                        {standard.type}
-                      </Badge>
-                    </div>
+            {currentStage && (
+              <>
+                <Card className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Icon name="Target" size={20} className="text-primary" />
+                    <h3 className="font-semibold">{currentStage.name}</h3>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="bg-muted/50 rounded p-3">
-                      <p className="text-muted-foreground text-xs mb-1">Мужчины</p>
-                      <p className="font-semibold text-primary">{standard.men}</p>
-                    </div>
-                    <div className="bg-muted/50 rounded p-3">
-                      <p className="text-muted-foreground text-xs mb-1">Женщины</p>
-                      <p className="font-semibold text-secondary">{standard.women}</p>
-                    </div>
-                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Возраст: {currentStage.ageRange}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Для получения знака отличия необходимо выполнить все обязательные испытания и 2 по выбору
+                  </p>
                 </Card>
-              ))}
-            </div>
+
+                {(() => {
+                  const standards = getStandardsByStage(currentStage.number, isAuthorized ? 'male' : selectedGender);
+                  return (
+                    <>
+                      <div className="space-y-3">
+                        <h4 className="font-medium text-sm flex items-center gap-2">
+                          <Icon name="AlertCircle" size={16} className="text-primary" />
+                          Обязательные испытания
+                        </h4>
+                        {standards.required.map((category: any, i: number) => (
+                          <Card key={i} className="p-4">
+                            <div className="flex justify-between items-start mb-3">
+                              <div>
+                                <h4 className="font-medium">{category.name}</h4>
+                                <Badge variant="outline" className="mt-1 text-xs bg-red-50 text-red-700 border-red-200">
+                                  {category.type}
+                                </Badge>
+                              </div>
+                            </div>
+                            <p className="text-xs text-muted-foreground mb-3">Выберите одну дисциплину:</p>
+                            {category.options.map((option: any, j: number) => (
+                              <div key={j} className="mb-3 last:mb-0">
+                                <p className="text-sm font-medium mb-2">{option.discipline}</p>
+                                <div className="grid grid-cols-3 gap-2 text-xs">
+                                  <div className="bg-yellow-50 rounded p-2 border border-yellow-200">
+                                    <p className="text-yellow-700 font-medium mb-1">🥇 Золото</p>
+                                    <p className="font-semibold text-yellow-900">{option.gold}</p>
+                                  </div>
+                                  <div className="bg-gray-50 rounded p-2 border border-gray-300">
+                                    <p className="text-gray-700 font-medium mb-1">🥈 Серебро</p>
+                                    <p className="font-semibold text-gray-900">{option.silver}</p>
+                                  </div>
+                                  <div className="bg-orange-50 rounded p-2 border border-orange-200">
+                                    <p className="text-orange-700 font-medium mb-1">🥉 Бронза</p>
+                                    <p className="font-semibold text-orange-900">{option.bronze}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </Card>
+                        ))}
+                      </div>
+
+                      <div className="space-y-3">
+                        <h4 className="font-medium text-sm flex items-center gap-2">
+                          <Icon name="CheckCircle2" size={16} className="text-secondary" />
+                          Испытания по выбору (выберите 2)
+                        </h4>
+                        {standards.choice.map((category: any, i: number) => (
+                          <Card key={i} className="p-4">
+                            <div className="flex justify-between items-start mb-3">
+                              <div>
+                                <h4 className="font-medium">{category.name}</h4>
+                                <Badge variant="outline" className="mt-1 text-xs bg-blue-50 text-blue-700 border-blue-200">
+                                  {category.type}
+                                </Badge>
+                              </div>
+                            </div>
+                            {category.options.map((option: any, j: number) => (
+                              <div key={j} className="mb-3 last:mb-0">
+                                <p className="text-sm font-medium mb-2">{option.discipline}</p>
+                                <div className="grid grid-cols-3 gap-2 text-xs">
+                                  <div className="bg-yellow-50 rounded p-2 border border-yellow-200">
+                                    <p className="text-yellow-700 font-medium mb-1">🥇 Золото</p>
+                                    <p className="font-semibold text-yellow-900">{option.gold}</p>
+                                  </div>
+                                  <div className="bg-gray-50 rounded p-2 border border-gray-300">
+                                    <p className="text-gray-700 font-medium mb-1">🥈 Серебро</p>
+                                    <p className="font-semibold text-gray-900">{option.silver}</p>
+                                  </div>
+                                  <div className="bg-orange-50 rounded p-2 border border-orange-200">
+                                    <p className="text-orange-700 font-medium mb-1">🥉 Бронза</p>
+                                    <p className="font-semibold text-orange-900">{option.bronze}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </Card>
+                        ))}
+                      </div>
+                    </>
+                  );
+                })()}
+              </>
+            )}
+
+            {!isAuthorized && !selectedAge && (
+              <Card className="p-8 text-center">
+                <Icon name="Target" size={48} className="mx-auto mb-4 text-muted-foreground" />
+                <h3 className="font-semibold text-lg mb-2">Нормативы ГТО</h3>
+                <p className="text-sm text-muted-foreground">
+                  Выберите возраст и пол для просмотра нормативов
+                </p>
+              </Card>
+            )}
           </div>
         )}
 
