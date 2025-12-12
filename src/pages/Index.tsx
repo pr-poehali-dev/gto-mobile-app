@@ -16,6 +16,8 @@ const Index = () => {
   const [selectedGender, setSelectedGender] = useState<'male' | 'female'>('male');
   const [selectedStageNumber, setSelectedStageNumber] = useState<number | null>(null);
   const [showAllStages, setShowAllStages] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [previousTab, setPreviousTab] = useState('news');
 
   const getStageByAge = (age: number): { number: number; name: string; ageRange: string } => {
     const stages = [
@@ -189,10 +191,19 @@ const Index = () => {
   ];
 
   const news = [
-    { id: 1, title: 'Открытие нового центра тестирования', date: '10.12.2024', image: '🏃' },
-    { id: 2, title: 'Изменения в нормативах с 2025 года', date: '08.12.2024', image: '📋' },
-    { id: 3, title: 'Массовая сдача ГТО 15 декабря', date: '05.12.2024', image: '🎯' },
+    { id: 1, title: 'Открытие нового центра тестирования', date: '10.12.2024', description: 'В городе открылся новый современный центр тестирования ГТО с полным набором спортивного оборудования', image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80' },
+    { id: 2, title: 'Изменения в нормативах с 2025 года', date: '08.12.2024', description: 'Министерство спорта утвердило новые нормативы для всех возрастных категорий', image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80' },
+    { id: 3, title: 'Массовая сдача ГТО 15 декабря', date: '05.12.2024', description: 'Приглашаем всех желающих принять участие в массовом мероприятии по сдаче норм ГТО', image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80' },
   ];
+
+  const handleNotificationsClick = () => {
+    setPreviousTab(activeTab);
+    setShowNotifications(true);
+  };
+
+  const handleBackFromNotifications = () => {
+    setShowNotifications(false);
+  };
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -200,11 +211,9 @@ const Index = () => {
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <img 
-                src="https://cdn.poehali.dev/files/image.png" 
-                alt="ГТО" 
-                className="w-10 h-10 object-contain"
-              />
+              <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-lg">ГТО</span>
+              </div>
               <div className="hidden sm:block">
                 <h1 className="text-lg font-bold text-foreground">ГТО России</h1>
                 <p className="text-xs text-muted-foreground">Готов к труду и обороне</p>
@@ -234,12 +243,12 @@ const Index = () => {
               <Button 
                 variant="ghost" 
                 size="sm"
-                onClick={() => setActiveTab('profile')}
-                className="relative flex items-center gap-1.5 text-xs px-2.5"
+                onClick={handleNotificationsClick}
+                className="relative flex items-center gap-1.5 text-xs px-2.5 mr-2"
               >
-                <Icon name="Bell" size={18} />
+                <Icon name="Bell" size={22} />
                 {userData.notifications.filter(n => !n.read).length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
                     {userData.notifications.filter(n => !n.read).length}
                   </span>
                 )}
@@ -313,6 +322,24 @@ const Index = () => {
 
                 <Card className="p-6">
                   <h3 className="font-semibold mb-4 flex items-center gap-2">
+                    <Icon name="Calendar" size={20} className="text-primary" />
+                    Записи на испытания
+                  </h3>
+                  <div className="space-y-3">
+                    {userData.appointments.map(app => (
+                      <div key={app.id} className="p-3 bg-muted/50 rounded-lg">
+                        <div className="flex justify-between items-start mb-1">
+                          <p className="font-medium text-sm">{app.discipline}</p>
+                          <Badge variant="secondary" className="text-xs">{app.date}</Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground">{app.time} • {app.center}</p>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+
+                <Card className="p-6">
+                  <h3 className="font-semibold mb-4 flex items-center gap-2">
                     <Icon name="Award" size={20} className="text-primary" />
                     Знаки отличия
                   </h3>
@@ -349,53 +376,6 @@ const Index = () => {
                         В процессе
                       </Badge>
                     </div>
-                  </div>
-                </Card>
-
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Icon name="Calendar" size={20} className="text-primary" />
-                    Записи на испытания
-                  </h3>
-                  <div className="space-y-3">
-                    {userData.appointments.map(app => (
-                      <div key={app.id} className="p-3 bg-muted/50 rounded-lg">
-                        <div className="flex justify-between items-start mb-1">
-                          <p className="font-medium text-sm">{app.discipline}</p>
-                          <Badge variant="secondary" className="text-xs">{app.date}</Badge>
-                        </div>
-                        <p className="text-xs text-muted-foreground">{app.time} • {app.center}</p>
-                      </div>
-                    ))}
-                  </div>
-                </Card>
-
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Icon name="Bell" size={20} className="text-primary" />
-                    Уведомления
-                    {userData.notifications.filter(n => !n.read).length > 0 && (
-                      <Badge variant="destructive" className="ml-auto">
-                        {userData.notifications.filter(n => !n.read).length}
-                      </Badge>
-                    )}
-                  </h3>
-                  <div className="space-y-3">
-                    {userData.notifications.map(notif => (
-                      <div key={notif.id} className={`p-3 rounded-lg border ${
-                        notif.read ? 'bg-muted/30 border-muted' : 'bg-blue-50 border-blue-200'
-                      }`}>
-                        <div className="flex items-start gap-2">
-                          {!notif.read && (
-                            <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5 flex-shrink-0"></div>
-                          )}
-                          <div className="flex-1">
-                            <p className="text-sm">{notif.text}</p>
-                            <p className="text-xs text-muted-foreground mt-1">{notif.date}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
                   </div>
                 </Card>
 
@@ -777,87 +757,120 @@ const Index = () => {
           </div>
         )}
 
-        {activeTab === 'news' && (
+        {showNotifications ? (
           <div className="space-y-4 animate-fade-in">
-            <Card className="p-4">
-              <h3 className="font-semibold mb-4 flex items-center gap-2">
-                <Icon name="Newspaper" size={20} className="text-primary" />
-                Новости ГТО
-              </h3>
-            </Card>
-
+            <div className="flex items-center gap-3 mb-4">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={handleBackFromNotifications}
+                className="flex items-center gap-2"
+              >
+                <Icon name="ArrowLeft" size={20} />
+                Назад
+              </Button>
+              <h2 className="text-xl font-bold">Уведомления</h2>
+            </div>
+            
             <div className="space-y-3">
-              {news.map(item => (
-                <Card key={item.id} className="p-4 hover-scale cursor-pointer">
-                  <div className="flex gap-4">
-                    <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center text-3xl flex-shrink-0">
-                      {item.image}
-                    </div>
+              {userData.notifications.map(notif => (
+                <Card key={notif.id} className={`p-4 ${
+                  notif.read ? 'bg-muted/30 border-muted' : 'bg-blue-50 border-blue-200'
+                }`}>
+                  <div className="flex items-start gap-2">
+                    {!notif.read && (
+                      <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5 flex-shrink-0"></div>
+                    )}
                     <div className="flex-1">
-                      <h4 className="font-medium mb-1">{item.title}</h4>
-                      <p className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Icon name="Calendar" size={12} />
-                        {item.date}
-                      </p>
+                      <p className="text-sm">{notif.text}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{notif.date}</p>
                     </div>
                   </div>
                 </Card>
               ))}
             </div>
           </div>
-        )}
+        ) : activeTab === 'news' ? (
+          <div className="space-y-6 animate-fade-in">
+            <h2 className="text-3xl font-bold">Новости ГТО</h2>
+
+            <div className="space-y-6">
+              {news.map(item => (
+                <Card key={item.id} className="overflow-hidden hover-scale cursor-pointer">
+                  <div className="w-full h-48 overflow-hidden">
+                    <img 
+                      src={item.image} 
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold text-lg mb-2">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground flex items-center gap-2 mb-3">
+                      <Icon name="Calendar" size={14} />
+                      {item.date}
+                    </p>
+                    <Button variant="outline" className="w-full">
+                      Читать подробнее
+                    </Button>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </main>
 
       <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border shadow-lg">
-        <div className="flex justify-around items-center h-16 px-2">
+        <div className="flex justify-around items-center h-16 px-1">
           <button
-            onClick={() => setActiveTab('news')}
-            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
-              activeTab === 'news' ? 'text-primary' : 'text-muted-foreground'
+            onClick={() => { setShowNotifications(false); setActiveTab('news'); }}
+            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-colors ${
+              activeTab === 'news' && !showNotifications ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <Icon name="Newspaper" size={20} />
-            <span className="text-xs font-medium">Новости</span>
+            <Icon name="Newspaper" size={18} />
+            <span className="text-[10px] font-medium">Новости</span>
           </button>
 
           <button
-            onClick={() => setActiveTab('centers')}
-            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
-              activeTab === 'centers' ? 'text-primary' : 'text-muted-foreground'
+            onClick={() => { setShowNotifications(false); setActiveTab('centers'); }}
+            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-colors ${
+              activeTab === 'centers' && !showNotifications ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <Icon name="MapPin" size={20} />
-            <span className="text-xs font-medium">Центры</span>
+            <Icon name="MapPin" size={18} />
+            <span className="text-[10px] font-medium">Центры</span>
           </button>
 
           <button
-            onClick={() => setActiveTab('standards')}
-            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
-              activeTab === 'standards' ? 'text-primary' : 'text-muted-foreground'
+            onClick={() => { setShowNotifications(false); setActiveTab('standards'); }}
+            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-colors ${
+              activeTab === 'standards' && !showNotifications ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <Icon name="Target" size={20} />
-            <span className="text-xs font-medium">Нормативы</span>
+            <Icon name="Target" size={18} />
+            <span className="text-[10px] font-medium">Нормативы</span>
           </button>
 
           <button
-            onClick={() => setActiveTab('booking')}
-            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
-              activeTab === 'booking' ? 'text-primary' : 'text-muted-foreground'
+            onClick={() => { setShowNotifications(false); setActiveTab('booking'); }}
+            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-colors ${
+              activeTab === 'booking' && !showNotifications ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <Icon name="Calendar" size={20} />
-            <span className="text-xs font-medium">Запись</span>
+            <Icon name="Calendar" size={18} />
+            <span className="text-[10px] font-medium">Запись</span>
           </button>
 
           <button
-            onClick={() => setActiveTab('profile')}
-            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
-              activeTab === 'profile' ? 'text-primary' : 'text-muted-foreground'
+            onClick={() => { setShowNotifications(false); setActiveTab('profile'); }}
+            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-colors ${
+              activeTab === 'profile' && !showNotifications ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <Icon name="User" size={20} />
-            <span className="text-xs font-medium">Профиль</span>
+            <Icon name="User" size={18} />
+            <span className="text-[10px] font-medium">Профиль</span>
           </button>
         </div>
       </nav>
