@@ -191,9 +191,9 @@ const Index = () => {
   ];
 
   const news = [
-    { id: 1, title: 'Открытие нового центра тестирования', date: '10.12.2024', description: 'В городе открылся новый современный центр тестирования ГТО с полным набором спортивного оборудования', image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80' },
-    { id: 2, title: 'Изменения в нормативах с 2025 года', date: '08.12.2024', description: 'Министерство спорта утвердило новые нормативы для всех возрастных категорий', image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80' },
-    { id: 3, title: 'Массовая сдача ГТО 15 декабря', date: '05.12.2024', description: 'Приглашаем всех желающих принять участие в массовом мероприятии по сдаче норм ГТО', image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80' },
+    { id: 1, title: 'Судейский состав ГТО становится сильнее!', date: '10.12.2024', description: 'В городе открылся новый современный центр тестирования ГТО с полным набором спортивного оборудования', image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80' },
+    { id: 2, title: 'Развитие всероссийского комплекса ГТО в ХМАО', date: '08.12.2024', description: 'Министерство спорта утвердило новые нормативы для всех возрастных категорий', image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80' },
+    { id: 3, title: 'Комплекс ГТО- путь к здоровью и успеху', date: '05.12.2024', description: 'Приглашаем всех желающих принять участие в массовом мероприятии по сдаче норм ГТО', image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80' },
   ];
 
   const handleNotificationsClick = () => {
@@ -210,13 +210,12 @@ const Index = () => {
       <header className="bg-card border-b border-border sticky top-0 z-10 shadow-sm">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-lg">ГТО</span>
               </div>
-              <div className="hidden sm:block">
-                <h1 className="text-lg font-bold text-foreground">ГТО России</h1>
-                <p className="text-xs text-muted-foreground">Готов к труду и обороне</p>
+              <div>
+                <p className="text-xs text-muted-foreground leading-tight">Готов к труду<br/>и обороне</p>
               </div>
             </div>
             {!isAuthorized ? (
@@ -225,18 +224,16 @@ const Index = () => {
                   variant="outline" 
                   size="sm"
                   onClick={() => setIsAuthorized(true)}
-                  className="flex items-center gap-1.5 text-xs px-2.5 sm:px-4"
+                  className="text-xs px-3"
                 >
-                  <Icon name="LogIn" size={14} className="sm:w-4 sm:h-4" />
-                  <span className="hidden sm:inline">Войти</span>
+                  Войти
                 </Button>
                 <Button 
                   size="sm"
                   onClick={() => setIsAuthorized(true)}
-                  className="flex items-center gap-1.5 text-xs px-2.5 sm:px-4"
+                  className="text-xs px-3"
                 >
-                  <Icon name="UserPlus" size={14} className="sm:w-4 sm:h-4" />
-                  <span className="hidden sm:inline">Регистрация</span>
+                  Регистрация
                 </Button>
               </div>
             ) : (
@@ -302,7 +299,7 @@ const Index = () => {
                 <Card className="p-6">
                   <div className="flex items-start gap-4">
                     <Avatar className="w-20 h-20">
-                      <AvatarImage src="" />
+                      <AvatarImage src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" />
                       <AvatarFallback className="bg-primary text-primary-foreground text-2xl">
                         {userData.name.split(' ').map(n => n[0]).join('')}
                       </AvatarFallback>
@@ -340,6 +337,33 @@ const Index = () => {
 
                 <Card className="p-6">
                   <h3 className="font-semibold mb-4 flex items-center gap-2">
+                    <Icon name="FileText" size={20} className="text-primary" />
+                    Результаты испытаний
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Бег 100м</span>
+                      <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-400 flex items-center gap-1">
+                        🥇 Золото
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Подтягивание</span>
+                      <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-400 flex items-center gap-1">
+                        🥈 Серебро
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Прыжок в длину</span>
+                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                        В процессе
+                      </Badge>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6">
+                  <h3 className="font-semibold mb-4 flex items-center gap-2">
                     <Icon name="Award" size={20} className="text-primary" />
                     Знаки отличия
                   </h3>
@@ -349,33 +373,6 @@ const Index = () => {
                         {badge}
                       </Badge>
                     ))}
-                  </div>
-                </Card>
-
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Icon name="FileText" size={20} className="text-primary" />
-                    Результаты испытаний
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Бег 100м</span>
-                      <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                        Выполнено
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Подтягивание</span>
-                      <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                        Выполнено
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Прыжок в длину</span>
-                      <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">
-                        В процессе
-                      </Badge>
-                    </div>
                   </div>
                 </Card>
 
@@ -606,17 +603,15 @@ const Index = () => {
                   return (
                     <>
                       <div className="space-y-3">
-                        <h4 className="font-medium text-sm flex items-center gap-2">
+                        <h4 className="font-bold text-base flex items-center gap-2 bg-red-100 p-3 rounded-lg">
+                          <Icon name="AlertCircle" size={20} className="text-red-700" />
                           Обязательные испытания
                         </h4>
                         {standards.required.map((category: any, i: number) => (
-                          <Card key={i} className="p-4">
+                          <Card key={i} className="p-4 border-l-4 border-red-500 bg-red-50/30">
                             <div className="flex justify-between items-start mb-3">
                               <div>
                                 <h4 className="font-medium">{category.name}</h4>
-                                <Badge variant="outline" className="mt-1 text-xs bg-red-50 text-red-700 border-red-200">
-                                  {category.type}
-                                </Badge>
                               </div>
                             </div>
                             {category.options.length > 1 && (
@@ -651,18 +646,15 @@ const Index = () => {
                       </div>
 
                       <div className="space-y-3">
-                        <h4 className="font-medium text-sm flex items-center gap-2">
-                          <Icon name="CheckCircle2" size={16} className="text-secondary" />
+                        <h4 className="font-bold text-base flex items-center gap-2 bg-blue-100 p-3 rounded-lg">
+                          <Icon name="CheckCircle2" size={20} className="text-blue-700" />
                           Испытания по выбору (выберите 2)
                         </h4>
                         {standards.choice.map((category: any, i: number) => (
-                          <Card key={i} className="p-4">
+                          <Card key={i} className="p-4 border-l-4 border-blue-500 bg-blue-50/30">
                             <div className="flex justify-between items-start mb-3">
                               <div>
                                 <h4 className="font-medium">{category.name}</h4>
-                                <Badge variant="outline" className="mt-1 text-xs bg-blue-50 text-blue-700 border-blue-200">
-                                  {category.type}
-                                </Badge>
                               </div>
                             </div>
                             {category.options.length > 1 && (
@@ -759,18 +751,16 @@ const Index = () => {
 
         {showNotifications ? (
           <div className="space-y-4 animate-fade-in">
-            <div className="flex items-center gap-3 mb-4">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={handleBackFromNotifications}
-                className="flex items-center gap-2"
-              >
-                <Icon name="ArrowLeft" size={20} />
-                Назад
-              </Button>
-              <h2 className="text-xl font-bold">Уведомления</h2>
-            </div>
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={handleBackFromNotifications}
+              className="flex items-center gap-2 mb-2"
+            >
+              <Icon name="ArrowLeft" size={20} />
+              Назад
+            </Button>
+            <h2 className="text-xl font-bold mb-4">Уведомления</h2>
             
             <div className="space-y-3">
               {userData.notifications.map(notif => (
