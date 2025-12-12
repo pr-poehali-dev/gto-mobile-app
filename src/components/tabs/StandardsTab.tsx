@@ -12,6 +12,8 @@ interface StandardsTabProps {
   currentStage: { number: number; name: string; ageRange: string } | null;
   getStandardsByStage: (stageNumber: number, gender: 'male' | 'female') => any;
   ageRanges: Array<{ label: string; minAge: number; maxAge: number }>;
+  selectedStageNumber?: number | null;
+  setSelectedStageNumber?: (stage: number | null) => void;
 }
 
 const StandardsTab = ({
@@ -23,6 +25,8 @@ const StandardsTab = ({
   currentStage,
   getStandardsByStage,
   ageRanges,
+  selectedStageNumber,
+  setSelectedStageNumber,
 }: StandardsTabProps) => {
   return (
     <div className="space-y-4 animate-fade-in">
@@ -64,16 +68,56 @@ const StandardsTab = ({
         </Card>
       )}
 
+      {isAuthorized && (
+        <Card className="p-4">
+          <h3 className="font-semibold mb-3">Выберите ступень</h3>
+          <Select 
+            value={selectedStageNumber?.toString() || currentStage?.number.toString() || ''} 
+            onValueChange={(v) => {
+              if (setSelectedStageNumber) {
+                setSelectedStageNumber(parseInt(v));
+              }
+            }}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Выберите ступень" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1">I ступень (6-7 лет)</SelectItem>
+              <SelectItem value="2">II ступень (8-9 лет)</SelectItem>
+              <SelectItem value="3">III ступень (10-11 лет)</SelectItem>
+              <SelectItem value="4">IV ступень (12-13 лет)</SelectItem>
+              <SelectItem value="5">V ступень (14-15 лет)</SelectItem>
+              <SelectItem value="6">VI ступень (16-17 лет)</SelectItem>
+              <SelectItem value="7">VII ступень (18-19 лет)</SelectItem>
+              <SelectItem value="8">VIII ступень (20-24 лет)</SelectItem>
+              <SelectItem value="9">IX ступень (25-29 лет)</SelectItem>
+              <SelectItem value="10">X ступень (30-34 лет)</SelectItem>
+              <SelectItem value="11">XI ступень (35-39 лет)</SelectItem>
+              <SelectItem value="12">XII ступень (40-44 лет)</SelectItem>
+              <SelectItem value="13">XIII ступень (45-49 лет)</SelectItem>
+              <SelectItem value="14">XIV ступень (50-54 лет)</SelectItem>
+              <SelectItem value="15">XV ступень (55-59 лет)</SelectItem>
+              <SelectItem value="16">XVI ступень (60-64 лет)</SelectItem>
+              <SelectItem value="17">XVII ступень (65-69 лет)</SelectItem>
+              <SelectItem value="18">XVIII ступень (70+ лет)</SelectItem>
+            </SelectContent>
+          </Select>
+        </Card>
+      )}
+
       {currentStage && (
         <>
           <Card className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10">
-            <div className="flex items-center gap-2 mb-2">
-              <Icon name="Target" size={20} className="text-primary" />
-              <h3 className="font-semibold">{currentStage.name}</h3>
+            <div className="flex flex-col items-center gap-2 mb-2">
+              <div className="flex items-center gap-2">
+                <Icon name="Target" size={20} className="text-primary" />
+                <h3 className="font-semibold">{currentStage.name}</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Возраст: {currentStage.ageRange}
+              </p>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Возраст: {currentStage.ageRange}
-            </p>
           </Card>
 
           {(() => {

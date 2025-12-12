@@ -89,7 +89,7 @@ const Index = () => {
   };
 
   const currentStage = isAuthorized 
-    ? userData.stage 
+    ? (selectedStageNumber ? getStageByAge(selectedStageNumber * 3 + 6) : userData.stage)
     : (showAllStages && selectedStageNumber 
       ? getAllStages().find(s => s.number === selectedStageNumber)!
       : (selectedAge ? getStageByAge(selectedAge) : null));
@@ -102,29 +102,29 @@ const Index = () => {
     { 
       id: 1, 
       name: 'СК "Олимпийский"', 
-      address: 'ул. Ленина, 45', 
+      address: 'Олимпийский просп., 16, Москва', 
       distance: '1.2 км',
-      phone: '+7 (912) 345-67-89',
+      phone: '+7 (495) 645-01-11',
       schedule: 'Пн-Пт: 8:00-20:00, Сб-Вс: 9:00-18:00',
-      coordinates: [61.004531, 69.001914] as [number, number]
+      coordinates: [55.787448, 37.599194] as [number, number]
     },
     { 
       id: 2, 
-      name: 'Спортивный центр "Энергия"', 
-      address: 'пр. Победы, 12', 
+      name: 'Спортивный центр "Лужники"', 
+      address: 'Лужнецкая наб., 24, Москва', 
       distance: '2.5 км',
-      phone: '+7 (912) 456-78-90',
+      phone: '+7 (495) 780-08-08',
       schedule: 'Ежедневно: 7:00-22:00',
-      coordinates: [61.006531, 69.003914] as [number, number]
+      coordinates: [55.715765, 37.553604] as [number, number]
     },
     { 
       id: 3, 
       name: 'Стадион "Локомотив"', 
-      address: 'ул. Спортивная, 8', 
+      address: 'Большая Черкизовская ул., 125, Москва', 
       distance: '3.8 км',
-      phone: '+7 (912) 567-89-01',
+      phone: '+7 (495) 161-26-26',
       schedule: 'Пн-Вс: 6:00-23:00',
-      coordinates: [61.002531, 69.005914] as [number, number]
+      coordinates: [55.812075, 37.736275] as [number, number]
     },
   ];
 
@@ -150,7 +150,7 @@ const Index = () => {
         <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
           <div className="flex items-center justify-between p-4">
             <div className="flex items-center gap-3">
-              <img src="https://cdn.poehali.dev/files/24.06.png" alt="ГТО" className="h-10" />
+              <img src="https://cdn.poehali.dev/files/24.06.png" alt="ГТО" className="h-10 ml-2" />
             </div>
             {!isAuthorized ? (
               <div className="flex gap-2">
@@ -177,7 +177,7 @@ const Index = () => {
                 onClick={handleNotificationsClick}
                 className="relative flex items-center gap-1.5 text-xs px-2.5 mr-2"
               >
-                <Icon name="Bell" size={22} />
+                <Icon name="Bell" size={26} />
                 {userData.notifications.filter(n => !n.read).length > 0 && (
                   <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
                     {userData.notifications.filter(n => !n.read).length}
@@ -224,6 +224,8 @@ const Index = () => {
               currentStage={currentStage}
               getStandardsByStage={getStandardsByStage}
               ageRanges={ageRanges}
+              selectedStageNumber={selectedStageNumber}
+              setSelectedStageNumber={setSelectedStageNumber}
             />
           ) : activeTab === 'booking' ? (
             <BookingTab
