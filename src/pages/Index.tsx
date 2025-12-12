@@ -19,6 +19,28 @@ const Index = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [previousTab, setPreviousTab] = useState('news');
   const [centerSearch, setCenterSearch] = useState('');
+  const [selectedCenter, setSelectedCenter] = useState<number | null>(null);
+
+  const ageRanges = [
+    { label: '6-7 лет', minAge: 6, maxAge: 7 },
+    { label: '8-9 лет', minAge: 8, maxAge: 9 },
+    { label: '10-11 лет', minAge: 10, maxAge: 11 },
+    { label: '12-13 лет', minAge: 12, maxAge: 13 },
+    { label: '14-15 лет', minAge: 14, maxAge: 15 },
+    { label: '16-17 лет', minAge: 16, maxAge: 17 },
+    { label: '18-19 лет', minAge: 18, maxAge: 19 },
+    { label: '20-24 лет', minAge: 20, maxAge: 24 },
+    { label: '25-29 лет', minAge: 25, maxAge: 29 },
+    { label: '30-34 лет', minAge: 30, maxAge: 34 },
+    { label: '35-39 лет', minAge: 35, maxAge: 39 },
+    { label: '40-44 лет', minAge: 40, maxAge: 44 },
+    { label: '45-49 лет', minAge: 45, maxAge: 49 },
+    { label: '50-54 лет', minAge: 50, maxAge: 54 },
+    { label: '55-59 лет', minAge: 55, maxAge: 59 },
+    { label: '60-64 лет', minAge: 60, maxAge: 64 },
+    { label: '65-69 лет', minAge: 65, maxAge: 69 },
+    { label: '70 лет и старше', minAge: 70, maxAge: 120 },
+  ];
 
   const getStageByAge = (age: number): { number: number; name: string; ageRange: string } => {
     const stages = [
@@ -186,14 +208,38 @@ const Index = () => {
   };
 
   const testCenters = [
-    { id: 1, name: 'СК "Олимпийский"', address: 'ул. Ленина, 45', distance: '1.2 км' },
-    { id: 2, name: 'Спортивный центр "Энергия"', address: 'пр. Победы, 12', distance: '2.5 км' },
-    { id: 3, name: 'Стадион "Локомотив"', address: 'ул. Спортивная, 8', distance: '3.8 км' },
+    { 
+      id: 1, 
+      name: 'СК "Олимпийский"', 
+      address: 'ул. Ленина, 45', 
+      distance: '1.2 км',
+      phone: '+7 (912) 345-67-89',
+      schedule: 'Пн-Пт: 8:00-20:00, Сб-Вс: 9:00-18:00',
+      coordinates: [61.004531, 69.001914]
+    },
+    { 
+      id: 2, 
+      name: 'Спортивный центр "Энергия"', 
+      address: 'пр. Победы, 12', 
+      distance: '2.5 км',
+      phone: '+7 (912) 456-78-90',
+      schedule: 'Ежедневно: 7:00-22:00',
+      coordinates: [61.006531, 69.003914]
+    },
+    { 
+      id: 3, 
+      name: 'Стадион "Локомотив"', 
+      address: 'ул. Спортивная, 8', 
+      distance: '3.8 км',
+      phone: '+7 (912) 567-89-01',
+      schedule: 'Пн-Вс: 6:00-23:00',
+      coordinates: [61.002531, 69.005914]
+    },
   ];
 
   const news = [
     { id: 1, title: 'Судейский состав ГТО становится сильнее!', date: '10.12.2024', description: 'В городе открылся новый современный центр тестирования ГТО с полным набором спортивного оборудования', image: 'https://cdn.poehali.dev/files/b34ecrs0f7fp3miayivbbacd5ccahjiy.jpg' },
-    { id: 2, title: 'Развитие всероссийского комплекса ГТО в ХМАО', date: '08.12.2024', description: 'Министерство спорта утвердило новые нормативы для всех возрастных категорий', image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80' },
+    { id: 2, title: 'Развитие всероссийского комплекса ГТО в ХМАО', date: '08.12.2024', description: 'Министерство спорта утвердило новые нормативы для всех возрастных категорий', image: 'https://cdn.poehali.dev/files/agk82qxgmm71j9uiv07dpr0js223b02p.jpg' },
     { id: 3, title: 'Комплекс ГТО- путь к здоровью и успеху', date: '05.12.2024', description: 'Приглашаем всех желающих принять участие в массовом мероприятии по сдаче норм ГТО', image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80' },
   ];
 
@@ -306,23 +352,24 @@ const Index = () => {
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
-                      <h2 className="text-xl font-bold mb-3">{userData.name}</h2>
-                      <div className="space-y-2.5 text-sm">
-                        <p className="font-semibold text-primary bg-primary/10 px-3 py-2 rounded-lg">
+                      <h2 className="text-xl font-bold mb-4">{userData.name}</h2>
+                      <div className="space-y-2 text-sm">
+                        <div className="font-semibold text-primary bg-primary/10 px-3 py-2 rounded-lg">
                           {userData.stage.name} ({userData.stage.ageRange})
-                        </p>
-                        <p className="text-muted-foreground px-1">
-                          <span className="font-medium text-foreground">Дата рождения:</span> {userData.birthDate}
-                        </p>
-                        <p className="text-muted-foreground px-1">
-                          <span className="font-medium text-foreground">Возраст:</span> {userData.age} лет
-                        </p>
-                        <p className="text-muted-foreground px-1">
-                          <span className="font-medium text-foreground">Пол:</span> {userData.gender}
-                        </p>
-                        <p className="text-muted-foreground px-1">
-                          <span className="font-medium text-foreground">УИН:</span> {userData.uin}
-                        </p>
+                        </div>
+                        <div className="grid grid-cols-[120px_1fr] gap-x-2 gap-y-1.5 px-1">
+                          <span className="font-medium text-foreground">Дата рождения:</span>
+                          <span className="text-muted-foreground">{userData.birthDate}</span>
+                          
+                          <span className="font-medium text-foreground">Возраст:</span>
+                          <span className="text-muted-foreground">{userData.age} лет</span>
+                          
+                          <span className="font-medium text-foreground">Пол:</span>
+                          <span className="text-muted-foreground">{userData.gender}</span>
+                          
+                          <span className="font-medium text-foreground">УИН:</span>
+                          <span className="text-muted-foreground">{userData.uin}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -508,89 +555,36 @@ const Index = () => {
           <div className="space-y-4 animate-fade-in">
             {!isAuthorized && (
               <Card className="p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold">Выберите параметры</h3>
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    onClick={() => {
-                      setShowAllStages(!showAllStages);
-                      if (!showAllStages) {
-                        setSelectedAge(null);
-                      } else {
-                        setSelectedStageNumber(null);
-                      }
-                    }}
-                    className="text-xs"
-                  >
-                    {showAllStages ? 'По возрасту' : 'Все ступени'}
-                  </Button>
+                <h3 className="font-semibold mb-3">Выберите параметры</h3>
+                <div className="grid grid-cols-2 gap-3 mb-3">
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">Возраст</label>
+                    <Select value={selectedAge?.toString() || ''} onValueChange={(v) => setSelectedAge(parseInt(v))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Ваш возраст" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {ageRanges.map((range, idx) => (
+                          <SelectItem key={idx} value={range.minAge.toString()}>
+                            {range.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">Пол</label>
+                    <Select value={selectedGender} onValueChange={(v: 'male' | 'female') => setSelectedGender(v)}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="male">Мужской</SelectItem>
+                        <SelectItem value="female">Женский</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-                
-                {showAllStages ? (
-                  <div className="grid grid-cols-2 gap-3 mb-3">
-                    <div>
-                      <label className="text-xs text-muted-foreground mb-1 block">Ступень</label>
-                      <Select 
-                        value={selectedStageNumber?.toString() || ''} 
-                        onValueChange={(v) => setSelectedStageNumber(parseInt(v))}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Выберите ступень" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {getAllStages().map(stage => (
-                            <SelectItem key={stage.number} value={stage.number.toString()}>
-                              {stage.name} ({stage.ageRange})
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <label className="text-xs text-muted-foreground mb-1 block">Пол</label>
-                      <Select value={selectedGender} onValueChange={(v: 'male' | 'female') => setSelectedGender(v)}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="male">Мужской</SelectItem>
-                          <SelectItem value="female">Женский</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 gap-3 mb-3">
-                    <div>
-                      <label className="text-xs text-muted-foreground mb-1 block">Возраст</label>
-                      <Select value={selectedAge?.toString() || ''} onValueChange={(v) => setSelectedAge(parseInt(v))}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Ваш возраст" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {Array.from({ length: 65 }, (_, i) => i + 6).map(age => (
-                            <SelectItem key={age} value={age.toString()}>
-                              {age} {age === 1 ? 'год' : age < 5 ? 'года' : 'лет'}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <label className="text-xs text-muted-foreground mb-1 block">Пол</label>
-                      <Select value={selectedGender} onValueChange={(v: 'male' | 'female') => setSelectedGender(v)}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="male">Мужской</SelectItem>
-                          <SelectItem value="female">Женский</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                )}
               </Card>
             )}
 
@@ -752,22 +746,109 @@ const Index = () => {
                     />
                   </div>
                 </div>
-                <div className="space-y-3">
-                  {testCenters
-                    .filter(center => 
-                      center.name.toLowerCase().includes(centerSearch.toLowerCase()) ||
-                      center.address.toLowerCase().includes(centerSearch.toLowerCase())
-                    )
-                    .map(center => (
-                      <Card key={center.id} className="p-4">
-                        <h4 className="font-medium mb-2">{center.name}</h4>
-                        <p className="text-sm text-muted-foreground mb-3">{center.address}</p>
-                        <Button className="w-full" variant="outline">
-                          Записаться через Госуслуги
-                        </Button>
-                      </Card>
-                    ))}
-                </div>
+                {selectedCenter ? (
+                  <div className="space-y-4">
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => setSelectedCenter(null)}
+                      className="flex items-center gap-2"
+                    >
+                      <Icon name="ArrowLeft" size={18} />
+                      Назад к списку
+                    </Button>
+                    {(() => {
+                      const center = testCenters.find(c => c.id === selectedCenter);
+                      if (!center) return null;
+                      return (
+                        <>
+                          <Card className="overflow-hidden">
+                            <div className="w-full h-64 bg-muted relative">
+                              <iframe
+                                src={`https://yandex.ru/map-widget/v1/?ll=${center.coordinates[1]},${center.coordinates[0]}&z=15&l=map&pt=${center.coordinates[1]},${center.coordinates[0]},pm2rdm`}
+                                width="100%"
+                                height="100%"
+                                frameBorder="0"
+                                allowFullScreen
+                                style={{ position: 'relative' }}
+                              />
+                            </div>
+                          </Card>
+                          <Card className="p-6">
+                            <h2 className="text-2xl font-bold mb-4">{center.name}</h2>
+                            <div className="space-y-3 mb-6">
+                              <div className="flex items-start gap-3">
+                                <Icon name="MapPin" size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                                <div>
+                                  <p className="text-sm font-medium">Адрес</p>
+                                  <p className="text-sm text-muted-foreground">{center.address}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-3">
+                                <Icon name="Phone" size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                                <div>
+                                  <p className="text-sm font-medium">Телефон</p>
+                                  <p className="text-sm text-muted-foreground">{center.phone}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-3">
+                                <Icon name="Clock" size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                                <div>
+                                  <p className="text-sm font-medium">Режим работы</p>
+                                  <p className="text-sm text-muted-foreground">{center.schedule}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-3">
+                                <Icon name="Navigation" size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                                <div>
+                                  <p className="text-sm font-medium">Расстояние</p>
+                                  <p className="text-sm text-muted-foreground">{center.distance}</p>
+                                </div>
+                              </div>
+                            </div>
+                            <Button className="w-full">
+                              Записаться через Госуслуги
+                            </Button>
+                          </Card>
+                        </>
+                      );
+                    })()}
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {testCenters
+                      .filter(center => 
+                        center.name.toLowerCase().includes(centerSearch.toLowerCase()) ||
+                        center.address.toLowerCase().includes(centerSearch.toLowerCase())
+                      )
+                      .map(center => (
+                        <Card 
+                          key={center.id} 
+                          className="p-4 cursor-pointer hover:shadow-md transition-shadow"
+                          onClick={() => setSelectedCenter(center.id)}
+                        >
+                          <div className="flex items-start gap-3">
+                            <Icon name="MapPin" size={20} className="text-primary mt-1 flex-shrink-0" />
+                            <div className="flex-1">
+                              <h4 className="font-medium mb-1">{center.name}</h4>
+                              <p className="text-sm text-muted-foreground mb-2">{center.address}</p>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Icon name="Navigation" size={14} />
+                                  {center.distance}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <Icon name="Clock" size={14} />
+                                  {center.schedule.split(',')[0]}
+                                </span>
+                              </div>
+                            </div>
+                            <Icon name="ChevronRight" size={20} className="text-muted-foreground" />
+                          </div>
+                        </Card>
+                      ))}
+                  </div>
+                )}
               </>
             ) : (
               <Card className="p-8 text-center">
