@@ -107,7 +107,7 @@ const StandardsTab = ({
                 </div>
                 {selectedAge && currentStage && (
                   <p className="text-sm text-muted-foreground">
-                    {currentStage.name} • Возраст: {currentStage.ageRange}
+                    {currentStage.name}
                   </p>
                 )}
               </div>
