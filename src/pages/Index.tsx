@@ -232,13 +232,17 @@ const Index = () => {
               </div>
             ) : (
               <Button 
-                variant="outline" 
+                variant="ghost" 
                 size="sm"
-                onClick={() => setIsAuthorized(false)}
-                className="flex items-center gap-1.5 text-xs px-2.5 sm:px-4"
+                onClick={() => setActiveTab('profile')}
+                className="relative flex items-center gap-1.5 text-xs px-2.5"
               >
-                <Icon name="LogOut" size={14} className="sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Выйти</span>
+                <Icon name="Bell" size={18} />
+                {userData.notifications.filter(n => !n.read).length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
+                    {userData.notifications.filter(n => !n.read).length}
+                  </span>
+                )}
               </Button>
             )}
           </div>
@@ -299,6 +303,7 @@ const Index = () => {
                       <div className="mt-2 space-y-1 text-sm text-muted-foreground">
                         <p>Дата рождения: {userData.birthDate}</p>
                         <p>Возраст: {userData.age} лет</p>
+                        <p>Пол: {userData.gender}</p>
                         <p className="font-medium text-primary">{userData.stage.name} ({userData.stage.ageRange})</p>
                         <p>УИН: {userData.uin}</p>
                       </div>
@@ -317,20 +322,6 @@ const Index = () => {
                         {badge}
                       </Badge>
                     ))}
-                  </div>
-                </Card>
-
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Icon name="Activity" size={20} className="text-primary" />
-                    Прогресс выполнения
-                  </h3>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Выполнено испытаний</span>
-                      <span className="font-semibold">{userData.progress}%</span>
-                    </div>
-                    <Progress value={userData.progress} className="h-2" />
                   </div>
                 </Card>
 
@@ -408,38 +399,14 @@ const Index = () => {
                   </div>
                 </Card>
 
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Icon name="User" size={20} className="text-primary" />
-                    Данные участника
-                  </h3>
-                  <div className="space-y-3 text-sm">
-                    <div className="flex justify-between py-2 border-b">
-                      <span className="text-muted-foreground">ФИО:</span>
-                      <span className="font-medium">{userData.name}</span>
-                    </div>
-                    <div className="flex justify-between py-2 border-b">
-                      <span className="text-muted-foreground">Дата рождения:</span>
-                      <span className="font-medium">{userData.birthDate}</span>
-                    </div>
-                    <div className="flex justify-between py-2 border-b">
-                      <span className="text-muted-foreground">Возраст:</span>
-                      <span className="font-medium">{userData.age} лет</span>
-                    </div>
-                    <div className="flex justify-between py-2 border-b">
-                      <span className="text-muted-foreground">Пол:</span>
-                      <span className="font-medium">{userData.gender}</span>
-                    </div>
-                    <div className="flex justify-between py-2 border-b">
-                      <span className="text-muted-foreground">Ступень:</span>
-                      <span className="font-medium">{userData.stage.name}</span>
-                    </div>
-                    <div className="flex justify-between py-2">
-                      <span className="text-muted-foreground">УИН:</span>
-                      <span className="font-medium">{userData.uin}</span>
-                    </div>
-                  </div>
-                </Card>
+                <Button 
+                  variant="outline" 
+                  className="w-full gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                  onClick={() => setIsAuthorized(false)}
+                >
+                  <Icon name="LogOut" size={18} />
+                  Выйти из аккаунта
+                </Button>
               </>
             ) : (
               <Card className="p-8 text-center">
