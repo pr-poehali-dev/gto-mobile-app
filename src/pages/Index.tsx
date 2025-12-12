@@ -608,15 +608,15 @@ const Index = () => {
                                 <p className="text-sm font-medium mb-2">{option.discipline}</p>
                                 <div className="grid grid-cols-3 gap-2 text-xs">
                                   <div className="bg-yellow-50 rounded p-2 border-2 border-yellow-400 shadow-sm">
-                                    <p className="text-yellow-700 font-medium mb-1">🥇 Золото</p>
+                                    <p className="text-yellow-700 font-medium mb-1 whitespace-nowrap">🥇 Золото</p>
                                     <p className="font-semibold text-yellow-900">{option.gold}</p>
                                   </div>
                                   <div className="bg-gray-50 rounded p-2 border border-gray-300">
-                                    <p className="text-gray-700 font-medium mb-1">🥈 Серебро</p>
+                                    <p className="text-gray-700 font-medium mb-1 whitespace-nowrap">🥈 Серебро</p>
                                     <p className="font-semibold text-gray-900">{option.silver}</p>
                                   </div>
                                   <div className="bg-orange-50 rounded p-2 border border-orange-200">
-                                    <p className="text-orange-700 font-medium mb-1">🥉 Бронза</p>
+                                    <p className="text-orange-700 font-medium mb-1 whitespace-nowrap">🥉 Бронза</p>
                                     <p className="font-semibold text-orange-900">{option.bronze}</p>
                                   </div>
                                 </div>
@@ -646,15 +646,15 @@ const Index = () => {
                                 <p className="text-sm font-medium mb-2">{option.discipline}</p>
                                 <div className="grid grid-cols-3 gap-2 text-xs">
                                   <div className="bg-yellow-50 rounded p-2 border-2 border-yellow-400 shadow-sm">
-                                    <p className="text-yellow-700 font-medium mb-1">🥇 Золото</p>
+                                    <p className="text-yellow-700 font-medium mb-1 whitespace-nowrap">🥇 Золото</p>
                                     <p className="font-semibold text-yellow-900">{option.gold}</p>
                                   </div>
                                   <div className="bg-gray-50 rounded p-2 border border-gray-300">
-                                    <p className="text-gray-700 font-medium mb-1">🥈 Серебро</p>
+                                    <p className="text-gray-700 font-medium mb-1 whitespace-nowrap">🥈 Серебро</p>
                                     <p className="font-semibold text-gray-900">{option.silver}</p>
                                   </div>
                                   <div className="bg-orange-50 rounded p-2 border border-orange-200">
-                                    <p className="text-orange-700 font-medium mb-1">🥉 Бронза</p>
+                                    <p className="text-orange-700 font-medium mb-1 whitespace-nowrap">🥉 Бронза</p>
                                     <p className="font-semibold text-orange-900">{option.bronze}</p>
                                   </div>
                                 </div>
