@@ -109,7 +109,7 @@ const StandardsTab = ({
       {currentStage && (
         <>
           <Card className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10">
-            <div className="flex flex-col items-center gap-2 mb-2">
+            <div className="flex flex-col items-center justify-center gap-2 min-h-[80px]">
               <div className="flex items-center gap-2">
                 <Icon name="Target" size={20} className="text-primary" />
                 <h3 className="font-semibold">{currentStage.name}</h3>

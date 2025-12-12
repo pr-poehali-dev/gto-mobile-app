@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Icon from '@/components/ui/icon';
 
@@ -37,6 +38,16 @@ const ProfileTab = ({ userData }: ProfileTabProps) => {
             <h2 className="text-xl font-bold mb-3">{userData.name}</h2>
             <div className="font-semibold text-primary bg-primary/10 px-3 py-2 rounded-lg mb-4 inline-block">
               {userData.stage.name} ({userData.stage.ageRange})
+            </div>
+            <div className="flex gap-2 justify-center mb-4">
+              <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <Icon name="Edit" size={16} />
+                Редактировать профиль
+              </Button>
+              <Button variant="outline" size="sm" className="flex items-center gap-2 text-destructive hover:text-destructive">
+                <Icon name="LogOut" size={16} />
+                Выйти
+              </Button>
             </div>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between py-1.5 border-b">
