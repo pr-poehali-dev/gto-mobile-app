@@ -603,6 +603,14 @@ const Index = () => {
                                 </Badge>
                               </div>
                             </div>
+                            {category.options.length > 1 && (
+                              <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-2">
+                                <Icon name="Info" size={16} className="text-blue-600 flex-shrink-0 mt-0.5" />
+                                <p className="text-xs text-blue-700">
+                                  Необходимо выбрать одно из {category.options.length} испытаний
+                                </p>
+                              </div>
+                            )}
                             {category.options.map((option: any, j: number) => (
                               <div key={j} className="mb-3 last:mb-0">
                                 <p className="text-sm font-medium mb-2">{option.discipline}</p>
@@ -641,6 +649,14 @@ const Index = () => {
                                 </Badge>
                               </div>
                             </div>
+                            {category.options.length > 1 && (
+                              <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-2">
+                                <Icon name="Info" size={16} className="text-blue-600 flex-shrink-0 mt-0.5" />
+                                <p className="text-xs text-blue-700">
+                                  Необходимо выбрать одно из {category.options.length} испытаний
+                                </p>
+                              </div>
+                            )}
                             {category.options.map((option: any, j: number) => (
                               <div key={j} className="mb-3 last:mb-0">
                                 <p className="text-sm font-medium mb-2">{option.discipline}</p>
