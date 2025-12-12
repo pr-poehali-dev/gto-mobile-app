@@ -10,7 +10,7 @@ import Icon from '@/components/ui/icon';
 import { createStandards, getAllStages } from '@/data/gtoStandards';
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState('news');
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [selectedAge, setSelectedAge] = useState<number | null>(null);
   const [selectedGender, setSelectedGender] = useState<'male' | 'female'>('male');
@@ -197,13 +197,15 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background pb-20">
       <header className="bg-card border-b border-border sticky top-0 z-10 shadow-sm">
-        <div className="px-4 py-4">
+        <div className="px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">ГТО</span>
-              </div>
-              <div>
+            <div className="flex items-center gap-2">
+              <img 
+                src="https://cdn.poehali.dev/files/image.png" 
+                alt="ГТО" 
+                className="w-10 h-10 object-contain"
+              />
+              <div className="hidden sm:block">
                 <h1 className="text-lg font-bold text-foreground">ГТО России</h1>
                 <p className="text-xs text-muted-foreground">Готов к труду и обороне</p>
               </div>
@@ -214,18 +216,18 @@ const Index = () => {
                   variant="outline" 
                   size="sm"
                   onClick={() => setIsAuthorized(true)}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-1.5 text-xs px-2.5 sm:px-4"
                 >
-                  <Icon name="LogIn" size={16} />
-                  Войти
+                  <Icon name="LogIn" size={14} className="sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Войти</span>
                 </Button>
                 <Button 
                   size="sm"
                   onClick={() => setIsAuthorized(true)}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-1.5 text-xs px-2.5 sm:px-4"
                 >
-                  <Icon name="UserPlus" size={16} />
-                  Регистрация
+                  <Icon name="UserPlus" size={14} className="sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">Регистрация</span>
                 </Button>
               </div>
             ) : (
@@ -233,10 +235,10 @@ const Index = () => {
                 variant="outline" 
                 size="sm"
                 onClick={() => setIsAuthorized(false)}
-                className="flex items-center gap-2"
+                className="flex items-center gap-1.5 text-xs px-2.5 sm:px-4"
               >
-                <Icon name="LogOut" size={16} />
-                Выйти
+                <Icon name="LogOut" size={14} className="sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Выйти</span>
               </Button>
             )}
           </div>
@@ -255,55 +257,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <Card 
-                className="p-4 hover-scale cursor-pointer"
-                onClick={() => setActiveTab('centers')}
-              >
-                <div className="flex flex-col items-center text-center gap-2">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Icon name="MapPin" size={24} className="text-primary" />
-                  </div>
-                  <span className="text-sm font-medium">Центры</span>
-                </div>
-              </Card>
 
-              <Card 
-                className="p-4 hover-scale cursor-pointer"
-                onClick={() => setActiveTab('standards')}
-              >
-                <div className="flex flex-col items-center text-center gap-2">
-                  <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center">
-                    <Icon name="Target" size={24} className="text-secondary" />
-                  </div>
-                  <span className="text-sm font-medium">Нормативы</span>
-                </div>
-              </Card>
-
-              <Card 
-                className="p-4 hover-scale cursor-pointer"
-                onClick={() => setActiveTab('booking')}
-              >
-                <div className="flex flex-col items-center text-center gap-2">
-                  <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
-                    <Icon name="Calendar" size={24} className="text-accent" />
-                  </div>
-                  <span className="text-sm font-medium">Запись</span>
-                </div>
-              </Card>
-
-              <Card 
-                className="p-4 hover-scale cursor-pointer"
-                onClick={() => setActiveTab('news')}
-              >
-                <div className="flex flex-col items-center text-center gap-2">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Icon name="Newspaper" size={24} className="text-primary" />
-                  </div>
-                  <span className="text-sm font-medium">Новости</span>
-                </div>
-              </Card>
-            </div>
 
             <Card className="p-4">
               <h3 className="font-semibold mb-3 flex items-center gap-2">
@@ -890,52 +844,52 @@ const Index = () => {
       <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border shadow-lg">
         <div className="flex justify-around items-center h-16 px-2">
           <button
-            onClick={() => setActiveTab('home')}
-            className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
-              activeTab === 'home' ? 'text-primary' : 'text-muted-foreground'
+            onClick={() => setActiveTab('news')}
+            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
+              activeTab === 'news' ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <Icon name="Home" size={22} />
-            <span className="text-xs font-medium">Главная</span>
+            <Icon name="Newspaper" size={20} />
+            <span className="text-xs font-medium">Новости</span>
           </button>
 
           <button
             onClick={() => setActiveTab('centers')}
-            className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
               activeTab === 'centers' ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <Icon name="MapPin" size={22} />
+            <Icon name="MapPin" size={20} />
             <span className="text-xs font-medium">Центры</span>
           </button>
 
           <button
             onClick={() => setActiveTab('standards')}
-            className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
               activeTab === 'standards' ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <Icon name="Target" size={22} />
+            <Icon name="Target" size={20} />
             <span className="text-xs font-medium">Нормативы</span>
           </button>
 
           <button
             onClick={() => setActiveTab('booking')}
-            className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
               activeTab === 'booking' ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <Icon name="Calendar" size={22} />
+            <Icon name="Calendar" size={20} />
             <span className="text-xs font-medium">Запись</span>
           </button>
 
           <button
             onClick={() => setActiveTab('profile')}
-            className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
               activeTab === 'profile' ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
-            <Icon name="User" size={22} />
+            <Icon name="User" size={20} />
             <span className="text-xs font-medium">Профиль</span>
           </button>
         </div>
