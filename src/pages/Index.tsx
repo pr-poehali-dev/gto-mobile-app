@@ -18,6 +18,7 @@ const Index = () => {
   const [showAllStages, setShowAllStages] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [previousTab, setPreviousTab] = useState('news');
+  const [centerSearch, setCenterSearch] = useState('');
 
   const getStageByAge = (age: number): { number: number; name: string; ageRange: string } => {
     const stages = [
@@ -191,7 +192,7 @@ const Index = () => {
   ];
 
   const news = [
-    { id: 1, title: 'Судейский состав ГТО становится сильнее!', date: '10.12.2024', description: 'В городе открылся новый современный центр тестирования ГТО с полным набором спортивного оборудования', image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80' },
+    { id: 1, title: 'Судейский состав ГТО становится сильнее!', date: '10.12.2024', description: 'В городе открылся новый современный центр тестирования ГТО с полным набором спортивного оборудования', image: 'https://cdn.poehali.dev/files/b34ecrs0f7fp3miayivbbacd5ccahjiy.jpg' },
     { id: 2, title: 'Развитие всероссийского комплекса ГТО в ХМАО', date: '08.12.2024', description: 'Министерство спорта утвердило новые нормативы для всех возрастных категорий', image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80' },
     { id: 3, title: 'Комплекс ГТО- путь к здоровью и успеху', date: '05.12.2024', description: 'Приглашаем всех желающих принять участие в массовом мероприятии по сдаче норм ГТО', image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80' },
   ];
@@ -305,13 +306,23 @@ const Index = () => {
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
-                      <h2 className="text-xl font-bold">{userData.name}</h2>
-                      <div className="mt-2 space-y-1 text-sm text-muted-foreground">
-                        <p>Дата рождения: {userData.birthDate}</p>
-                        <p>Возраст: {userData.age} лет</p>
-                        <p>Пол: {userData.gender}</p>
-                        <p className="font-medium text-primary">{userData.stage.name} ({userData.stage.ageRange})</p>
-                        <p>УИН: {userData.uin}</p>
+                      <h2 className="text-xl font-bold mb-3">{userData.name}</h2>
+                      <div className="space-y-2.5 text-sm">
+                        <p className="font-semibold text-primary bg-primary/10 px-3 py-2 rounded-lg">
+                          {userData.stage.name} ({userData.stage.ageRange})
+                        </p>
+                        <p className="text-muted-foreground px-1">
+                          <span className="font-medium text-foreground">Дата рождения:</span> {userData.birthDate}
+                        </p>
+                        <p className="text-muted-foreground px-1">
+                          <span className="font-medium text-foreground">Возраст:</span> {userData.age} лет
+                        </p>
+                        <p className="text-muted-foreground px-1">
+                          <span className="font-medium text-foreground">Пол:</span> {userData.gender}
+                        </p>
+                        <p className="text-muted-foreground px-1">
+                          <span className="font-medium text-foreground">УИН:</span> {userData.uin}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -593,9 +604,7 @@ const Index = () => {
                   <p className="text-sm text-muted-foreground">
                     Возраст: {currentStage.ageRange}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Для получения знака отличия необходимо выполнить все обязательные испытания и 2 по выбору
-                  </p>
+
                 </Card>
 
                 {(() => {
@@ -603,12 +612,17 @@ const Index = () => {
                   return (
                     <>
                       <div className="space-y-3">
-                        <h4 className="font-bold text-base flex items-center gap-2 bg-red-100 p-3 rounded-lg">
-                          <Icon name="AlertCircle" size={20} className="text-red-700" />
-                          Обязательные испытания
-                        </h4>
+                        <div className="bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-100 p-4 rounded-lg border border-amber-200">
+                          <h4 className="font-bold text-base flex items-center gap-2 text-amber-900">
+                            <Icon name="Star" size={20} className="text-amber-600" />
+                            Обязательные испытания
+                          </h4>
+                          <p className="text-xs text-amber-700 mt-1.5 ml-7">
+                            Одна дисциплина из каждой категории на выбор
+                          </p>
+                        </div>
                         {standards.required.map((category: any, i: number) => (
-                          <Card key={i} className="p-4 border-l-4 border-red-500 bg-red-50/30">
+                          <Card key={i} className="p-4 border-l-4 border-amber-400 bg-gradient-to-r from-amber-50/50 to-yellow-50/30">
                             <div className="flex justify-between items-start mb-3">
                               <div>
                                 <h4 className="font-medium">{category.name}</h4>
@@ -646,12 +660,17 @@ const Index = () => {
                       </div>
 
                       <div className="space-y-3">
-                        <h4 className="font-bold text-base flex items-center gap-2 bg-blue-100 p-3 rounded-lg">
-                          <Icon name="CheckCircle2" size={20} className="text-blue-700" />
-                          Испытания по выбору (выберите 2)
-                        </h4>
+                        <div className="bg-gradient-to-r from-blue-100 via-cyan-100 to-teal-100 p-4 rounded-lg border border-cyan-200">
+                          <h4 className="font-bold text-base flex items-center gap-2 text-cyan-900">
+                            <Icon name="CheckCircle2" size={20} className="text-cyan-600" />
+                            Испытания по выбору
+                          </h4>
+                          <p className="text-xs text-cyan-700 mt-1.5 ml-7">
+                            Необходимо выполнить 2 испытания из предложенных
+                          </p>
+                        </div>
                         {standards.choice.map((category: any, i: number) => (
-                          <Card key={i} className="p-4 border-l-4 border-blue-500 bg-blue-50/30">
+                          <Card key={i} className="p-4 border-l-4 border-cyan-400 bg-gradient-to-r from-cyan-50/50 to-teal-50/30">
                             <div className="flex justify-between items-start mb-3">
                               <div>
                                 <h4 className="font-medium">{category.name}</h4>
@@ -721,16 +740,33 @@ const Index = () => {
                   </p>
                 </Card>
 
+                <div className="mb-4">
+                  <div className="relative">
+                    <Icon name="Search" size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+                    <input
+                      type="text"
+                      placeholder="Поиск по названию или адресу..."
+                      value={centerSearch}
+                      onChange={(e) => setCenterSearch(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                  </div>
+                </div>
                 <div className="space-y-3">
-                  {testCenters.map(center => (
-                    <Card key={center.id} className="p-4">
-                      <h4 className="font-medium mb-2">{center.name}</h4>
-                      <p className="text-sm text-muted-foreground mb-3">{center.address}</p>
-                      <Button className="w-full" variant="outline">
-                        Записаться через Госуслуги
-                      </Button>
-                    </Card>
-                  ))}
+                  {testCenters
+                    .filter(center => 
+                      center.name.toLowerCase().includes(centerSearch.toLowerCase()) ||
+                      center.address.toLowerCase().includes(centerSearch.toLowerCase())
+                    )
+                    .map(center => (
+                      <Card key={center.id} className="p-4">
+                        <h4 className="font-medium mb-2">{center.name}</h4>
+                        <p className="text-sm text-muted-foreground mb-3">{center.address}</p>
+                        <Button className="w-full" variant="outline">
+                          Записаться через Госуслуги
+                        </Button>
+                      </Card>
+                    ))}
                 </div>
               </>
             ) : (
