@@ -30,44 +30,6 @@ const StandardsTab = ({
 }: StandardsTabProps) => {
   return (
     <div className="space-y-4 animate-fade-in">
-      {!isAuthorized && (
-        <Card className="p-4">
-          <h3 className="font-semibold mb-3">Выберите параметры</h3>
-          <div className="grid grid-cols-2 gap-3 mb-3">
-            <div>
-              <label className="text-xs text-muted-foreground mb-1 block">Возраст</label>
-              <Select value={selectedAge?.toString() || ''} onValueChange={(v) => setSelectedAge(parseInt(v))}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Ваш возраст" />
-                </SelectTrigger>
-                <SelectContent>
-                  {ageRanges.map((range, idx) => (
-                    <SelectItem key={idx} value={range.minAge.toString()}>
-                      {range.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <label className="text-xs text-muted-foreground mb-1 block">Пол</label>
-              <Select value={selectedGender} onValueChange={(v: 'male' | 'female') => setSelectedGender(v)}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="male">Мужской</SelectItem>
-                  <SelectItem value="female">Женский</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Выберите возраст и пол для просмотра нормативов
-          </p>
-        </Card>
-      )}
-
       {currentStage && (
         <>
           <Card className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10">
@@ -111,14 +73,45 @@ const StandardsTab = ({
                 </Select>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center gap-2 min-h-[80px]">
+              <div className="flex flex-col items-center justify-center gap-3">
                 <div className="flex items-center gap-2">
                   <Icon name="Target" size={20} className="text-primary" />
-                  <h3 className="font-semibold">{currentStage.name}</h3>
+                  <h3 className="font-semibold">Выберите параметры</h3>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Возраст: {currentStage.ageRange}
-                </p>
+                <div className="grid grid-cols-2 gap-3 w-full max-w-xs">
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">Возраст</label>
+                    <Select value={selectedAge?.toString() || ''} onValueChange={(v) => setSelectedAge(parseInt(v))}>
+                      <SelectTrigger className="bg-background">
+                        <SelectValue placeholder="Ваш возраст" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {ageRanges.map((range, idx) => (
+                          <SelectItem key={idx} value={range.minAge.toString()}>
+                            {range.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">Пол</label>
+                    <Select value={selectedGender} onValueChange={(v: 'male' | 'female') => setSelectedGender(v)}>
+                      <SelectTrigger className="bg-background">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="male">Мужской</SelectItem>
+                        <SelectItem value="female">Женский</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                {selectedAge && (
+                  <p className="text-sm text-muted-foreground">
+                    {currentStage.name} • Возраст: {currentStage.ageRange}
+                  </p>
+                )}
               </div>
             )}
           </Card>
