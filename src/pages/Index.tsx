@@ -200,7 +200,7 @@ const Index = () => {
             <MainTab isAuthorized={isAuthorized} news={news} />
           ) : activeTab === 'profile' ? (
             isAuthorized ? (
-              <ProfileTab userData={userData} />
+              <ProfileTab userData={userData} onLogout={() => setIsAuthorized(false)} />
             ) : (
               <div className="text-center p-8">
                 <Icon name="User" size={48} className="mx-auto mb-4 text-muted-foreground" />

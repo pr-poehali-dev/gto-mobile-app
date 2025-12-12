@@ -21,9 +21,15 @@ interface ProfileTabProps {
       center: string;
     }>;
   };
+  onLogout?: () => void;
 }
 
-const ProfileTab = ({ userData }: ProfileTabProps) => {
+const ProfileTab = ({ userData, onLogout }: ProfileTabProps) => {
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
+  };
   return (
     <div className="space-y-4 animate-fade-in">
       <Card className="p-4">
@@ -35,19 +41,14 @@ const ProfileTab = ({ userData }: ProfileTabProps) => {
             </AvatarFallback>
           </Avatar>
           <div className="w-full text-center">
-            <h2 className="text-xl font-bold mb-3">{userData.name}</h2>
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <h2 className="text-xl font-bold">{userData.name}</h2>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Icon name="Edit" size={18} />
+              </Button>
+            </div>
             <div className="font-semibold text-primary bg-primary/10 px-3 py-2 rounded-lg mb-4 inline-block">
               {userData.stage.name} ({userData.stage.ageRange})
-            </div>
-            <div className="flex gap-2 justify-center mb-4">
-              <Button variant="outline" size="sm" className="flex items-center gap-2">
-                <Icon name="Edit" size={16} />
-                Редактировать профиль
-              </Button>
-              <Button variant="outline" size="sm" className="flex items-center gap-2 text-destructive hover:text-destructive">
-                <Icon name="LogOut" size={16} />
-                Выйти
-              </Button>
             </div>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between py-1.5 border-b">
@@ -123,6 +124,15 @@ const ProfileTab = ({ userData }: ProfileTabProps) => {
           ))}
         </div>
       </Card>
+
+      <Button 
+        variant="outline" 
+        className="w-full flex items-center justify-center gap-2 text-destructive hover:text-destructive hover:bg-destructive/10"
+        onClick={handleLogout}
+      >
+        <Icon name="LogOut" size={18} />
+        Выйти из аккаунта
+      </Button>
     </div>
   );
 };
