@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Progress } from '@/components/ui/progress';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { createStandards, getAllStages } from '@/data/gtoStandards';
+import MainTab from '@/components/tabs/MainTab';
+import ProfileTab from '@/components/tabs/ProfileTab';
+import StandardsTab from '@/components/tabs/StandardsTab';
+import BookingTab from '@/components/tabs/BookingTab';
+import NotificationsView from '@/components/tabs/NotificationsView';
+import NewsTab from '@/components/tabs/NewsTab';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('news');
@@ -98,115 +98,6 @@ const Index = () => {
     return createStandards(stageNumber, gender);
   };
 
-  const getStandardsByStageOld = (stageNumber: number, gender: 'male' | 'female') => {
-    const standardsMap: Record<number, any> = {
-      9: {
-        required: [
-          {
-            name: 'Скоростные возможности',
-            type: 'Обязательное',
-            options: [
-              {
-                discipline: 'Бег 60 м',
-                gold: gender === 'male' ? '8.1 сек' : '9.6 сек',
-                silver: gender === 'male' ? '9.0 сек' : '10.5 сек',
-                bronze: gender === 'male' ? '9.6 сек' : '11.0 сек'
-              },
-              {
-                discipline: 'Бег 100 м',
-                gold: gender === 'male' ? '13.6 сек' : '16.0 сек',
-                silver: gender === 'male' ? '14.6 сек' : '17.1 сек',
-                bronze: gender === 'male' ? '15.3 сек' : '18.0 сек'
-              }
-            ]
-          },
-          {
-            name: 'Силовые возможности',
-            type: 'Обязательное',
-            options: [
-              {
-                discipline: gender === 'male' ? 'Подтягивание' : 'Отжимание',
-                gold: gender === 'male' ? '13 раз' : '14 раз',
-                silver: gender === 'male' ? '10 раз' : '11 раз',
-                bronze: gender === 'male' ? '7 раз' : '8 раз'
-              },
-              {
-                discipline: 'Рывок гири 16 кг',
-                gold: gender === 'male' ? '35 раз' : '25 раз',
-                silver: gender === 'male' ? '25 раз' : '18 раз',
-                bronze: gender === 'male' ? '18 раз' : '12 раз'
-              }
-            ]
-          },
-          {
-            name: 'Выносливость',
-            type: 'Обязательное',
-            options: [
-              {
-                discipline: 'Бег 2 км',
-                gold: gender === 'male' ? '8:10 мин' : '10:20 мин',
-                silver: gender === 'male' ? '9:20 мин' : '11:35 мин',
-                bronze: gender === 'male' ? '10:00 мин' : '12:40 мин'
-              },
-              {
-                discipline: 'Бег 3 км',
-                gold: gender === 'male' ? '13:00 мин' : '—',
-                silver: gender === 'male' ? '14:30 мин' : '—',
-                bronze: gender === 'male' ? '15:40 мин' : '—'
-              }
-            ]
-          }
-        ],
-        choice: [
-          {
-            name: 'Гибкость',
-            type: 'По выбору',
-            options: [
-              {
-                discipline: 'Наклон вперед',
-                gold: gender === 'male' ? '+13 см' : '+16 см',
-                silver: gender === 'male' ? '+8 см' : '+11 см',
-                bronze: gender === 'male' ? '+6 см' : '+8 см'
-              }
-            ]
-          },
-          {
-            name: 'Скоростно-силовые',
-            type: 'По выбору',
-            options: [
-              {
-                discipline: 'Прыжок в длину',
-                gold: gender === 'male' ? '230 см' : '195 см',
-                silver: gender === 'male' ? '215 см' : '180 см',
-                bronze: gender === 'male' ? '200 см' : '170 см'
-              },
-              {
-                discipline: 'Метание мяча',
-                gold: gender === 'male' ? '37 м' : '23 м',
-                silver: gender === 'male' ? '33 м' : '20 м',
-                bronze: gender === 'male' ? '30 м' : '17 м'
-              }
-            ]
-          },
-          {
-            name: 'Прикладные навыки',
-            type: 'По выбору',
-            options: [
-              {
-                discipline: 'Плавание 50 м',
-                gold: gender === 'male' ? '50 сек' : '1:05 мин',
-                silver: gender === 'male' ? '1:00 мин' : '1:15 мин',
-                bronze: gender === 'male' ? '1:10 мин' : '1:28 мин'
-              }
-            ]
-          }
-        ]
-      }
-    };
-
-    return standardsMap[stageNumber] || standardsMap[9];
-  };
-
   const testCenters = [
     { 
       id: 1, 
@@ -215,7 +106,7 @@ const Index = () => {
       distance: '1.2 км',
       phone: '+7 (912) 345-67-89',
       schedule: 'Пн-Пт: 8:00-20:00, Сб-Вс: 9:00-18:00',
-      coordinates: [61.004531, 69.001914]
+      coordinates: [61.004531, 69.001914] as [number, number]
     },
     { 
       id: 2, 
@@ -224,7 +115,7 @@ const Index = () => {
       distance: '2.5 км',
       phone: '+7 (912) 456-78-90',
       schedule: 'Ежедневно: 7:00-22:00',
-      coordinates: [61.006531, 69.003914]
+      coordinates: [61.006531, 69.003914] as [number, number]
     },
     { 
       id: 3, 
@@ -233,7 +124,7 @@ const Index = () => {
       distance: '3.8 км',
       phone: '+7 (912) 567-89-01',
       schedule: 'Пн-Вс: 6:00-23:00',
-      coordinates: [61.002531, 69.005914]
+      coordinates: [61.002531, 69.005914] as [number, number]
     },
   ];
 
@@ -250,13 +141,14 @@ const Index = () => {
 
   const handleBackFromNotifications = () => {
     setShowNotifications(false);
+    setActiveTab(previousTab);
   };
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      <header className="bg-card border-b border-border sticky top-0 z-10 shadow-sm">
-        <div className="px-4 py-3">
-          <div className="flex items-center justify-between">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-2xl mx-auto pb-20">
+        <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+          <div className="flex items-center justify-between p-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-lg">ГТО</span>
@@ -299,688 +191,99 @@ const Index = () => {
               </Button>
             )}
           </div>
-        </div>
-      </header>
+        </header>
 
-      <main className="px-4 py-6">
-        {activeTab === 'home' && (
-          <div className="space-y-6 animate-fade-in">
-            <div className="bg-gradient-to-r from-primary to-secondary rounded-lg p-6 text-white shadow-lg">
-              <h2 className="text-2xl font-bold mb-2">Добро пожаловать!</h2>
-              <p className="text-sm opacity-90">
-                {isAuthorized 
-                  ? 'Вы авторизованы через Госуслуги'
-                  : 'Войдите через Госуслуги для полного доступа'}
-              </p>
-            </div>
-
-
-
-            <Card className="p-4">
-              <h3 className="font-semibold mb-3 flex items-center gap-2">
-                <Icon name="TrendingUp" size={20} className="text-primary" />
-                Последние новости
-              </h3>
-              <div className="space-y-3">
-                {news.slice(0, 2).map((item, index) => (
-                  <div key={item.id} className="flex gap-3 pb-3 border-b last:border-0">
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 text-xl" 
-                         style={{background: index === 0 ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'}}>
-                      {item.image}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">{item.title}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{item.date}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </div>
-        )}
-
-        {activeTab === 'profile' && (
-          <div className="space-y-4 animate-fade-in">
-            {isAuthorized ? (
-              <>
-                <Card className="p-6">
-                  <div className="flex items-start gap-4">
-                    <Avatar className="w-20 h-20">
-                      <AvatarImage src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" />
-                      <AvatarFallback className="bg-primary text-primary-foreground text-2xl">
-                        {userData.name.split(' ').map(n => n[0]).join('')}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <h2 className="text-xl font-bold mb-4">{userData.name}</h2>
-                      <div className="space-y-2 text-sm">
-                        <div className="font-semibold text-primary bg-primary/10 px-3 py-2 rounded-lg">
-                          {userData.stage.name} ({userData.stage.ageRange})
-                        </div>
-                        <div className="grid grid-cols-[120px_1fr] gap-x-2 gap-y-1.5 px-1">
-                          <span className="font-medium text-foreground">Дата рождения:</span>
-                          <span className="text-muted-foreground">{userData.birthDate}</span>
-                          
-                          <span className="font-medium text-foreground">Возраст:</span>
-                          <span className="text-muted-foreground">{userData.age} лет</span>
-                          
-                          <span className="font-medium text-foreground">Пол:</span>
-                          <span className="text-muted-foreground">{userData.gender}</span>
-                          
-                          <span className="font-medium text-foreground">УИН:</span>
-                          <span className="text-muted-foreground">{userData.uin}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Icon name="Calendar" size={20} className="text-primary" />
-                    Записи на испытания
-                  </h3>
-                  <div className="space-y-3">
-                    {userData.appointments.map(app => (
-                      <div key={app.id} className="p-3 bg-muted/50 rounded-lg">
-                        <div className="flex justify-between items-start mb-1">
-                          <p className="font-medium text-sm">{app.discipline}</p>
-                          <Badge variant="secondary" className="text-xs">{app.date}</Badge>
-                        </div>
-                        <p className="text-xs text-muted-foreground">{app.time} • {app.center}</p>
-                      </div>
-                    ))}
-                  </div>
-                </Card>
-
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Icon name="FileText" size={20} className="text-primary" />
-                    Результаты испытаний
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Бег 100м</span>
-                      <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-400 flex items-center gap-1">
-                        🥇 Золото
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Подтягивание</span>
-                      <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-400 flex items-center gap-1">
-                        🥈 Серебро
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Прыжок в длину</span>
-                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                        В процессе
-                      </Badge>
-                    </div>
-                  </div>
-                </Card>
-
-                <Card className="p-6">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Icon name="Award" size={20} className="text-primary" />
-                    Знаки отличия
-                  </h3>
-                  <div className="flex gap-2 flex-wrap">
-                    {userData.badges.map((badge, i) => (
-                      <Badge key={i} variant="secondary" className="px-4 py-2">
-                        {badge}
-                      </Badge>
-                    ))}
-                  </div>
-                </Card>
-
-                <Button 
-                  variant="outline" 
-                  className="w-full gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
-                  onClick={() => setIsAuthorized(false)}
-                >
-                  <Icon name="LogOut" size={18} />
-                  Выйти из аккаунта
-                </Button>
-              </>
+        <main className="p-4">
+          {showNotifications ? (
+            <NotificationsView 
+              userData={userData}
+              onBack={handleBackFromNotifications}
+            />
+          ) : activeTab === 'news' ? (
+            <NewsTab news={news} />
+          ) : activeTab === 'main' ? (
+            <MainTab isAuthorized={isAuthorized} news={news} />
+          ) : activeTab === 'profile' ? (
+            isAuthorized ? (
+              <ProfileTab userData={userData} />
             ) : (
-              <Card className="p-8 text-center">
+              <div className="text-center p-8">
                 <Icon name="User" size={48} className="mx-auto mb-4 text-muted-foreground" />
-                <h3 className="font-semibold text-lg mb-2">Личный кабинет</h3>
+                <h3 className="font-semibold text-lg mb-2">Профиль</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Войдите через Госуслуги для доступа к личному кабинету
-                </p>
-                <div className="flex gap-3 justify-center">
-                  <Button onClick={() => setIsAuthorized(true)} className="gap-2">
-                    <Icon name="LogIn" size={18} />
-                    Войти
-                  </Button>
-                  <Button onClick={() => setIsAuthorized(true)} variant="outline" className="gap-2">
-                    <Icon name="UserPlus" size={18} />
-                    Регистрация
-                  </Button>
-                </div>
-              </Card>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'centers' && (
-          <div className="space-y-4 animate-fade-in">
-            <div className="relative overflow-hidden rounded-lg h-64 bg-[#F2EFE9]">
-              <div className="absolute inset-0">
-                <svg viewBox="0 0 400 300" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
-                  <defs>
-                    <filter id="shadow">
-                      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
-                      <feOffset dx="0" dy="1" result="offsetblur"/>
-                      <feComponentTransfer>
-                        <feFuncA type="linear" slope="0.3"/>
-                      </feComponentTransfer>
-                      <feMerge>
-                        <feMergeNode/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
-                  </defs>
-                  
-                  <rect x="0" y="0" width="400" height="300" fill="#F2EFE9"/>
-                  
-                  <ellipse cx="100" cy="80" rx="35" ry="30" fill="#D4E7D4" opacity="0.7"/>
-                  <ellipse cx="310" cy="220" rx="40" ry="35" fill="#D4E7D4" opacity="0.7"/>
-                  <ellipse cx="150" cy="240" rx="30" ry="25" fill="#D4E7D4" opacity="0.7"/>
-                  
-                  <path d="M 80 150 Q 150 140 200 150 Q 250 160 320 150" stroke="#A8D5F7" strokeWidth="4" fill="none"/>
-                  
-                  <circle cx="200" cy="150" rx="100" ry="95" r="95" fill="none" stroke="#FDB462" strokeWidth="4" opacity="0.9"/>
-                  
-                  <path d="M 50 150 L 350 150" stroke="#FFFFFF" strokeWidth="3"/>
-                  <path d="M 200 50 L 200 250" stroke="#FFFFFF" strokeWidth="3"/>
-                  <path d="M 120 90 L 280 210" stroke="#FFFFFF" strokeWidth="2.5"/>
-                  <path d="M 280 90 L 120 210" stroke="#FFFFFF" strokeWidth="2.5"/>
-                  
-                  <path d="M 150 120 L 250 120" stroke="#FFFFFF" strokeWidth="2"/>
-                  <path d="M 150 180 L 250 180" stroke="#FFFFFF" strokeWidth="2"/>
-                  <path d="M 170 100 L 230 100" stroke="#FFFFFF" strokeWidth="1.5"/>
-                  <path d="M 170 200 L 230 200" stroke="#FFFFFF" strokeWidth="1.5"/>
-                  
-                  <circle cx="160" cy="130" r="8" fill="#FF5252" stroke="white" strokeWidth="2.5" filter="url(#shadow)"/>
-                  <circle cx="200" cy="155" r="8" fill="#FF5252" stroke="white" strokeWidth="2.5" filter="url(#shadow)"/>
-                  <circle cx="240" cy="175" r="8" fill="#FF5252" stroke="white" strokeWidth="2.5" filter="url(#shadow)"/>
-                  
-                  <text x="160" y="120" fontSize="8" fill="#333" textAnchor="middle" fontWeight="600">Олимпийский</text>
-                  <text x="200" y="145" fontSize="8" fill="#333" textAnchor="middle" fontWeight="600">Энергия</text>
-                  <text x="240" y="165" fontSize="8" fill="#333" textAnchor="middle" fontWeight="600">Локомотив</text>
-                </svg>
-              </div>
-              <div className="absolute top-3 right-3 bg-white rounded-lg shadow-md px-3 py-2 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span className="text-xs font-semibold text-slate-700">3 центра</span>
-              </div>
-              <div className="absolute bottom-3 left-3 bg-white rounded-lg shadow-md px-3 py-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <span className="text-xs font-semibold text-slate-700">Центр ГТО</span>
-                </div>
-              </div>
-              <div className="absolute top-3 left-3 bg-white/90 rounded px-2 py-1">
-                <span className="text-[10px] font-semibold text-slate-600">Москва</span>
-              </div>
-            </div>
-
-            <Card className="p-4">
-              <h3 className="font-semibold mb-4 flex items-center gap-2">
-                <Icon name="MapPin" size={20} className="text-primary" />
-                Ближайшие центры
-              </h3>
-              <div className="space-y-3">
-                {testCenters.map(center => (
-                  <div key={center.id} className="p-4 bg-muted/50 rounded-lg hover-scale cursor-pointer">
-                    <div className="flex justify-between items-start mb-2 gap-3">
-                      <h4 className="font-medium flex-1">{center.name}</h4>
-                      <Badge variant="secondary" className="whitespace-nowrap flex-shrink-0">{center.distance}</Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground flex items-center gap-1">
-                      <Icon name="MapPin" size={14} />
-                      {center.address}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </div>
-        )}
-
-        {activeTab === 'standards' && (
-          <div className="space-y-4 animate-fade-in">
-            {!isAuthorized && (
-              <Card className="p-4">
-                <h3 className="font-semibold mb-3">Выберите параметры</h3>
-                <div className="grid grid-cols-2 gap-3 mb-3">
-                  <div>
-                    <label className="text-xs text-muted-foreground mb-1 block">Возраст</label>
-                    <Select value={selectedAge?.toString() || ''} onValueChange={(v) => setSelectedAge(parseInt(v))}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Ваш возраст" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {ageRanges.map((range, idx) => (
-                          <SelectItem key={idx} value={range.minAge.toString()}>
-                            {range.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <label className="text-xs text-muted-foreground mb-1 block">Пол</label>
-                    <Select value={selectedGender} onValueChange={(v: 'male' | 'female') => setSelectedGender(v)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="male">Мужской</SelectItem>
-                        <SelectItem value="female">Женский</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </Card>
-            )}
-
-            {currentStage && (
-              <>
-                <Card className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Icon name="Target" size={20} className="text-primary" />
-                    <h3 className="font-semibold">{currentStage.name}</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Возраст: {currentStage.ageRange}
-                  </p>
-
-                </Card>
-
-                {(() => {
-                  const standards = getStandardsByStage(currentStage.number, isAuthorized ? 'male' : selectedGender);
-                  return (
-                    <>
-                      <div className="space-y-3">
-                        <div className="bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-100 p-4 rounded-lg border border-amber-200">
-                          <h4 className="font-bold text-base flex items-center gap-2 text-amber-900">
-                            <Icon name="Star" size={20} className="text-amber-600" />
-                            Обязательные испытания
-                          </h4>
-                          <p className="text-xs text-amber-700 mt-1.5 ml-7">
-                            Одна дисциплина из каждой категории на выбор
-                          </p>
-                        </div>
-                        {standards.required.map((category: any, i: number) => (
-                          <Card key={i} className="p-4 border-l-4 border-amber-400 bg-gradient-to-r from-amber-50/50 to-yellow-50/30">
-                            <div className="flex justify-between items-start mb-3">
-                              <div>
-                                <h4 className="font-medium">{category.name}</h4>
-                              </div>
-                            </div>
-                            {category.options.length > 1 && (
-                              <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-2">
-                                <Icon name="Info" size={16} className="text-blue-600 flex-shrink-0 mt-0.5" />
-                                <p className="text-xs text-blue-700">
-                                  Необходимо выбрать одно из {category.options.length} испытаний
-                                </p>
-                              </div>
-                            )}
-                            {category.options.map((option: any, j: number) => (
-                              <div key={j} className="mb-3 last:mb-0">
-                                <p className="text-sm font-medium mb-2">{option.discipline}</p>
-                                <div className="grid grid-cols-3 gap-2 text-xs">
-                                  <div className="bg-yellow-50 rounded p-2 border-2 border-yellow-400 shadow-sm">
-                                    <p className="text-yellow-700 font-medium mb-1 whitespace-nowrap">🥇 Золото</p>
-                                    <p className="font-semibold text-yellow-900">{option.gold}</p>
-                                  </div>
-                                  <div className="bg-gray-50 rounded p-2 border border-gray-300">
-                                    <p className="text-gray-700 font-medium mb-1 whitespace-nowrap">🥈 Серебро</p>
-                                    <p className="font-semibold text-gray-900">{option.silver}</p>
-                                  </div>
-                                  <div className="bg-orange-50 rounded p-2 border border-orange-200">
-                                    <p className="text-orange-700 font-medium mb-1 whitespace-nowrap">🥉 Бронза</p>
-                                    <p className="font-semibold text-orange-900">{option.bronze}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                          </Card>
-                        ))}
-                      </div>
-
-                      <div className="space-y-3">
-                        <div className="bg-gradient-to-r from-blue-100 via-cyan-100 to-teal-100 p-4 rounded-lg border border-cyan-200">
-                          <h4 className="font-bold text-base flex items-center gap-2 text-cyan-900">
-                            <Icon name="CheckCircle2" size={20} className="text-cyan-600" />
-                            Испытания по выбору
-                          </h4>
-                          <p className="text-xs text-cyan-700 mt-1.5 ml-7">
-                            Необходимо выполнить 2 испытания из предложенных
-                          </p>
-                        </div>
-                        {standards.choice.map((category: any, i: number) => (
-                          <Card key={i} className="p-4 border-l-4 border-cyan-400 bg-gradient-to-r from-cyan-50/50 to-teal-50/30">
-                            <div className="flex justify-between items-start mb-3">
-                              <div>
-                                <h4 className="font-medium">{category.name}</h4>
-                              </div>
-                            </div>
-                            {category.options.length > 1 && (
-                              <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-2">
-                                <Icon name="Info" size={16} className="text-blue-600 flex-shrink-0 mt-0.5" />
-                                <p className="text-xs text-blue-700">
-                                  Необходимо выбрать одно из {category.options.length} испытаний
-                                </p>
-                              </div>
-                            )}
-                            {category.options.map((option: any, j: number) => (
-                              <div key={j} className="mb-3 last:mb-0">
-                                <p className="text-sm font-medium mb-2">{option.discipline}</p>
-                                <div className="grid grid-cols-3 gap-2 text-xs">
-                                  <div className="bg-yellow-50 rounded p-2 border-2 border-yellow-400 shadow-sm">
-                                    <p className="text-yellow-700 font-medium mb-1 whitespace-nowrap">🥇 Золото</p>
-                                    <p className="font-semibold text-yellow-900">{option.gold}</p>
-                                  </div>
-                                  <div className="bg-gray-50 rounded p-2 border border-gray-300">
-                                    <p className="text-gray-700 font-medium mb-1 whitespace-nowrap">🥈 Серебро</p>
-                                    <p className="font-semibold text-gray-900">{option.silver}</p>
-                                  </div>
-                                  <div className="bg-orange-50 rounded p-2 border border-orange-200">
-                                    <p className="text-orange-700 font-medium mb-1 whitespace-nowrap">🥉 Бронза</p>
-                                    <p className="font-semibold text-orange-900">{option.bronze}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                          </Card>
-                        ))}
-                      </div>
-                    </>
-                  );
-                })()}
-              </>
-            )}
-
-            {!isAuthorized && !selectedAge && !selectedStageNumber && (
-              <Card className="p-8 text-center">
-                <Icon name="Target" size={48} className="mx-auto mb-4 text-muted-foreground" />
-                <h3 className="font-semibold text-lg mb-2">Нормативы ГТО</h3>
-                <p className="text-sm text-muted-foreground">
-                  {showAllStages 
-                    ? 'Выберите ступень и пол для просмотра нормативов'
-                    : 'Выберите возраст и пол для просмотра нормативов'}
-                </p>
-              </Card>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'booking' && (
-          <div className="space-y-4 animate-fade-in">
-            {isAuthorized ? (
-              <>
-                <Card className="p-6 bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
-                  <h3 className="font-semibold mb-2 flex items-center gap-2">
-                    <Icon name="Calendar" size={20} className="text-primary" />
-                    Запись на тестирование
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Выберите центр тестирования и удобное время
-                  </p>
-                </Card>
-
-                <div className="mb-4">
-                  <div className="relative">
-                    <Icon name="Search" size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-                    <input
-                      type="text"
-                      placeholder="Поиск по названию или адресу..."
-                      value={centerSearch}
-                      onChange={(e) => setCenterSearch(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-                </div>
-                {selectedCenter ? (
-                  <div className="space-y-4">
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      onClick={() => setSelectedCenter(null)}
-                      className="flex items-center gap-2"
-                    >
-                      <Icon name="ArrowLeft" size={18} />
-                      Назад к списку
-                    </Button>
-                    {(() => {
-                      const center = testCenters.find(c => c.id === selectedCenter);
-                      if (!center) return null;
-                      return (
-                        <>
-                          <Card className="overflow-hidden">
-                            <div className="w-full h-64 bg-muted relative">
-                              <iframe
-                                src={`https://yandex.ru/map-widget/v1/?ll=${center.coordinates[1]},${center.coordinates[0]}&z=15&l=map&pt=${center.coordinates[1]},${center.coordinates[0]},pm2rdm`}
-                                width="100%"
-                                height="100%"
-                                frameBorder="0"
-                                allowFullScreen
-                                style={{ position: 'relative' }}
-                              />
-                            </div>
-                          </Card>
-                          <Card className="p-6">
-                            <h2 className="text-2xl font-bold mb-4">{center.name}</h2>
-                            <div className="space-y-3 mb-6">
-                              <div className="flex items-start gap-3">
-                                <Icon name="MapPin" size={20} className="text-primary mt-0.5 flex-shrink-0" />
-                                <div>
-                                  <p className="text-sm font-medium">Адрес</p>
-                                  <p className="text-sm text-muted-foreground">{center.address}</p>
-                                </div>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <Icon name="Phone" size={20} className="text-primary mt-0.5 flex-shrink-0" />
-                                <div>
-                                  <p className="text-sm font-medium">Телефон</p>
-                                  <p className="text-sm text-muted-foreground">{center.phone}</p>
-                                </div>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <Icon name="Clock" size={20} className="text-primary mt-0.5 flex-shrink-0" />
-                                <div>
-                                  <p className="text-sm font-medium">Режим работы</p>
-                                  <p className="text-sm text-muted-foreground">{center.schedule}</p>
-                                </div>
-                              </div>
-                              <div className="flex items-start gap-3">
-                                <Icon name="Navigation" size={20} className="text-primary mt-0.5 flex-shrink-0" />
-                                <div>
-                                  <p className="text-sm font-medium">Расстояние</p>
-                                  <p className="text-sm text-muted-foreground">{center.distance}</p>
-                                </div>
-                              </div>
-                            </div>
-                            <Button className="w-full">
-                              Записаться через Госуслуги
-                            </Button>
-                          </Card>
-                        </>
-                      );
-                    })()}
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {testCenters
-                      .filter(center => 
-                        center.name.toLowerCase().includes(centerSearch.toLowerCase()) ||
-                        center.address.toLowerCase().includes(centerSearch.toLowerCase())
-                      )
-                      .map(center => (
-                        <Card 
-                          key={center.id} 
-                          className="p-4 cursor-pointer hover:shadow-md transition-shadow"
-                          onClick={() => setSelectedCenter(center.id)}
-                        >
-                          <div className="flex items-start gap-3">
-                            <Icon name="MapPin" size={20} className="text-primary mt-1 flex-shrink-0" />
-                            <div className="flex-1">
-                              <h4 className="font-medium mb-1">{center.name}</h4>
-                              <p className="text-sm text-muted-foreground mb-2">{center.address}</p>
-                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                                <span className="flex items-center gap-1">
-                                  <Icon name="Navigation" size={14} />
-                                  {center.distance}
-                                </span>
-                                <span className="flex items-center gap-1">
-                                  <Icon name="Clock" size={14} />
-                                  {center.schedule.split(',')[0]}
-                                </span>
-                              </div>
-                            </div>
-                            <Icon name="ChevronRight" size={20} className="text-muted-foreground" />
-                          </div>
-                        </Card>
-                      ))}
-                  </div>
-                )}
-              </>
-            ) : (
-              <Card className="p-8 text-center">
-                <Icon name="Calendar" size={48} className="mx-auto mb-4 text-muted-foreground" />
-                <h3 className="font-semibold text-lg mb-2">Запись на тестирование</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Для записи необходимо войти через Госуслуги
+                  Для просмотра профиля необходимо войти через Госуслуги
                 </p>
                 <Button onClick={() => setIsAuthorized(true)} className="gap-2">
                   <Icon name="LogIn" size={18} />
                   Войти через Госуслуги
                 </Button>
-              </Card>
-            )}
-          </div>
-        )}
+              </div>
+            )
+          ) : activeTab === 'standards' ? (
+            <StandardsTab
+              isAuthorized={isAuthorized}
+              selectedAge={selectedAge}
+              setSelectedAge={setSelectedAge}
+              selectedGender={selectedGender}
+              setSelectedGender={setSelectedGender}
+              currentStage={currentStage}
+              getStandardsByStage={getStandardsByStage}
+              ageRanges={ageRanges}
+            />
+          ) : activeTab === 'booking' ? (
+            <BookingTab
+              isAuthorized={isAuthorized}
+              setIsAuthorized={setIsAuthorized}
+              centerSearch={centerSearch}
+              setCenterSearch={setCenterSearch}
+              selectedCenter={selectedCenter}
+              setSelectedCenter={setSelectedCenter}
+              testCenters={testCenters}
+            />
+          ) : null}
+        </main>
 
-        {showNotifications ? (
-          <div className="space-y-4 animate-fade-in">
-            <Button 
-              variant="ghost" 
-              size="sm"
-              onClick={handleBackFromNotifications}
-              className="flex items-center gap-2 mb-2"
+        <nav className="fixed bottom-0 left-0 right-0 bg-background border-t">
+          <div className="max-w-2xl mx-auto flex justify-around items-center p-2">
+            <button
+              onClick={() => setActiveTab('news')}
+              className={`flex flex-col items-center gap-1 p-2 rounded-lg transition-colors ${
+                activeTab === 'news' ? 'text-primary bg-primary/10' : 'text-muted-foreground'
+              }`}
             >
-              <Icon name="ArrowLeft" size={20} />
-              Назад
-            </Button>
-            <h2 className="text-xl font-bold mb-4">Уведомления</h2>
-            
-            <div className="space-y-3">
-              {userData.notifications.map(notif => (
-                <Card key={notif.id} className={`p-4 ${
-                  notif.read ? 'bg-muted/30 border-muted' : 'bg-blue-50 border-blue-200'
-                }`}>
-                  <div className="flex items-start gap-2">
-                    {!notif.read && (
-                      <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5 flex-shrink-0"></div>
-                    )}
-                    <div className="flex-1">
-                      <p className="text-sm">{notif.text}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{notif.date}</p>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
+              <Icon name="Newspaper" size={24} />
+              <span className="text-xs">Новости</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('standards')}
+              className={`flex flex-col items-center gap-1 p-2 rounded-lg transition-colors ${
+                activeTab === 'standards' ? 'text-primary bg-primary/10' : 'text-muted-foreground'
+              }`}
+            >
+              <Icon name="Trophy" size={24} />
+              <span className="text-xs">Нормативы</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('booking')}
+              className={`flex flex-col items-center gap-1 p-2 rounded-lg transition-colors ${
+                activeTab === 'booking' ? 'text-primary bg-primary/10' : 'text-muted-foreground'
+              }`}
+            >
+              <Icon name="MapPin" size={24} />
+              <span className="text-xs">Центры</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('profile')}
+              className={`flex flex-col items-center gap-1 p-2 rounded-lg transition-colors ${
+                activeTab === 'profile' ? 'text-primary bg-primary/10' : 'text-muted-foreground'
+              }`}
+            >
+              <Icon name="User" size={24} />
+              <span className="text-xs">Профиль</span>
+            </button>
           </div>
-        ) : activeTab === 'news' ? (
-          <div className="space-y-6 animate-fade-in">
-            <h2 className="text-3xl font-bold">Новости ГТО</h2>
-
-            <div className="space-y-6">
-              {news.map(item => (
-                <Card key={item.id} className="overflow-hidden hover-scale cursor-pointer">
-                  <div className="w-full h-48 overflow-hidden">
-                    <img 
-                      src={item.image} 
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground flex items-center gap-2 mb-3">
-                      <Icon name="Calendar" size={14} />
-                      {item.date}
-                    </p>
-                    <Button variant="outline" className="w-full">
-                      Читать подробнее
-                    </Button>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </div>
-        ) : null}
-      </main>
-
-      <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border shadow-lg">
-        <div className="flex justify-around items-center h-16 px-1">
-          <button
-            onClick={() => { setShowNotifications(false); setActiveTab('news'); }}
-            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-colors ${
-              activeTab === 'news' && !showNotifications ? 'text-primary' : 'text-muted-foreground'
-            }`}
-          >
-            <Icon name="Newspaper" size={18} />
-            <span className="text-[10px] font-medium">Новости</span>
-          </button>
-
-          <button
-            onClick={() => { setShowNotifications(false); setActiveTab('centers'); }}
-            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-colors ${
-              activeTab === 'centers' && !showNotifications ? 'text-primary' : 'text-muted-foreground'
-            }`}
-          >
-            <Icon name="MapPin" size={18} />
-            <span className="text-[10px] font-medium">Центры</span>
-          </button>
-
-          <button
-            onClick={() => { setShowNotifications(false); setActiveTab('standards'); }}
-            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-colors ${
-              activeTab === 'standards' && !showNotifications ? 'text-primary' : 'text-muted-foreground'
-            }`}
-          >
-            <Icon name="Target" size={18} />
-            <span className="text-[10px] font-medium">Нормативы</span>
-          </button>
-
-          <button
-            onClick={() => { setShowNotifications(false); setActiveTab('booking'); }}
-            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-colors ${
-              activeTab === 'booking' && !showNotifications ? 'text-primary' : 'text-muted-foreground'
-            }`}
-          >
-            <Icon name="Calendar" size={18} />
-            <span className="text-[10px] font-medium">Запись</span>
-          </button>
-
-          <button
-            onClick={() => { setShowNotifications(false); setActiveTab('profile'); }}
-            className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg transition-colors ${
-              activeTab === 'profile' && !showNotifications ? 'text-primary' : 'text-muted-foreground'
-            }`}
-          >
-            <Icon name="User" size={18} />
-            <span className="text-[10px] font-medium">Профиль</span>
-          </button>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </div>
   );
 };
