@@ -396,46 +396,64 @@ const Index = () => {
 
         {activeTab === 'centers' && (
           <div className="space-y-4 animate-fade-in">
-            <div className="relative overflow-hidden rounded-lg h-64 bg-gradient-to-br from-slate-100 to-slate-200">
+            <div className="relative overflow-hidden rounded-lg h-64 bg-[#F2EFE9]">
               <div className="absolute inset-0">
-                <svg viewBox="0 0 400 300" className="w-full h-full">
+                <svg viewBox="0 0 400 300" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
                   <defs>
-                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#CBD5E1" strokeWidth="0.5" opacity="0.3"/>
-                    </pattern>
+                    <filter id="shadow">
+                      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                      <feOffset dx="0" dy="1" result="offsetblur"/>
+                      <feComponentTransfer>
+                        <feFuncA type="linear" slope="0.3"/>
+                      </feComponentTransfer>
+                      <feMerge>
+                        <feMergeNode/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
                   </defs>
                   
-                  <rect x="0" y="0" width="400" height="300" fill="url(#grid)" />
+                  <rect x="0" y="0" width="400" height="300" fill="#F2EFE9"/>
                   
-                  <ellipse cx="200" cy="150" rx="120" ry="100" fill="none" stroke="#94A3B8" strokeWidth="2" strokeDasharray="5,3" opacity="0.4" />
+                  <ellipse cx="100" cy="80" rx="35" ry="30" fill="#D4E7D4" opacity="0.7"/>
+                  <ellipse cx="310" cy="220" rx="40" ry="35" fill="#D4E7D4" opacity="0.7"/>
+                  <ellipse cx="150" cy="240" rx="30" ry="25" fill="#D4E7D4" opacity="0.7"/>
                   
-                  <path d="M 100 150 Q 150 120 200 150 Q 250 180 300 150" stroke="#3B82F6" strokeWidth="3" fill="none" opacity="0.6" />
-                  <path d="M 50 100 L 350 100" stroke="#94A3B8" strokeWidth="2" fill="none" />
-                  <path d="M 50 200 L 350 200" stroke="#94A3B8" strokeWidth="2" fill="none" />
-                  <path d="M 200 50 L 200 250" stroke="#94A3B8" strokeWidth="2" fill="none" />
+                  <path d="M 80 150 Q 150 140 200 150 Q 250 160 320 150" stroke="#A8D5F7" strokeWidth="4" fill="none"/>
                   
-                  <circle cx="140" cy="130" r="10" fill="#EF4444" stroke="white" strokeWidth="3" />
-                  <circle cx="200" cy="150" r="10" fill="#EF4444" stroke="white" strokeWidth="3" />
-                  <circle cx="260" cy="170" r="10" fill="#EF4444" stroke="white" strokeWidth="3" />
+                  <circle cx="200" cy="150" rx="100" ry="95" r="95" fill="none" stroke="#FDB462" strokeWidth="4" opacity="0.9"/>
                   
-                  <circle cx="200" cy="150" r="50" fill="#3B82F6" fillOpacity="0.1" stroke="#3B82F6" strokeWidth="2" strokeDasharray="4,4" />
+                  <path d="M 50 150 L 350 150" stroke="#FFFFFF" strokeWidth="3"/>
+                  <path d="M 200 50 L 200 250" stroke="#FFFFFF" strokeWidth="3"/>
+                  <path d="M 120 90 L 280 210" stroke="#FFFFFF" strokeWidth="2.5"/>
+                  <path d="M 280 90 L 120 210" stroke="#FFFFFF" strokeWidth="2.5"/>
                   
-                  <text x="140" y="120" fontSize="9" fill="#1E293B" textAnchor="middle" fontWeight="700">СК Олимп.</text>
-                  <text x="200" y="140" fontSize="9" fill="#1E293B" textAnchor="middle" fontWeight="700">СЦ Энергия</text>
-                  <text x="260" y="160" fontSize="9" fill="#1E293B" textAnchor="middle" fontWeight="700">Локомотив</text>
+                  <path d="M 150 120 L 250 120" stroke="#FFFFFF" strokeWidth="2"/>
+                  <path d="M 150 180 L 250 180" stroke="#FFFFFF" strokeWidth="2"/>
+                  <path d="M 170 100 L 230 100" stroke="#FFFFFF" strokeWidth="1.5"/>
+                  <path d="M 170 200 L 230 200" stroke="#FFFFFF" strokeWidth="1.5"/>
                   
-                  <text x="200" y="280" fontSize="12" fill="#64748B" textAnchor="middle" fontWeight="600">г. Москва</text>
+                  <circle cx="160" cy="130" r="8" fill="#FF5252" stroke="white" strokeWidth="2.5" filter="url(#shadow)"/>
+                  <circle cx="200" cy="155" r="8" fill="#FF5252" stroke="white" strokeWidth="2.5" filter="url(#shadow)"/>
+                  <circle cx="240" cy="175" r="8" fill="#FF5252" stroke="white" strokeWidth="2.5" filter="url(#shadow)"/>
+                  
+                  <text x="160" y="120" fontSize="8" fill="#333" textAnchor="middle" fontWeight="600">Олимпийский</text>
+                  <text x="200" y="145" fontSize="8" fill="#333" textAnchor="middle" fontWeight="600">Энергия</text>
+                  <text x="240" y="165" fontSize="8" fill="#333" textAnchor="middle" fontWeight="600">Локомотив</text>
                 </svg>
               </div>
-              <div className="absolute top-3 right-3 bg-white/95 backdrop-blur rounded-lg shadow-lg px-3 py-2 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <span className="text-xs font-medium text-slate-700">3 центра</span>
+              <div className="absolute top-3 right-3 bg-white rounded-lg shadow-md px-3 py-2 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <span className="text-xs font-semibold text-slate-700">3 центра</span>
               </div>
-              <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur rounded-lg shadow-lg px-3 py-2">
+              <div className="absolute bottom-3 left-3 bg-white rounded-lg shadow-md px-3 py-2">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <span className="text-xs font-medium text-slate-700">Центр ГТО</span>
+                  <span className="text-xs font-semibold text-slate-700">Центр ГТО</span>
                 </div>
+              </div>
+              <div className="absolute top-3 left-3 bg-white/90 rounded px-2 py-1">
+                <span className="text-[10px] font-semibold text-slate-600">Москва</span>
               </div>
             </div>
 
