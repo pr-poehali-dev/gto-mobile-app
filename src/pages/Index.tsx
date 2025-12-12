@@ -173,13 +173,13 @@ const Index = () => {
             ) : (
               <Button 
                 variant="ghost" 
-                size="sm"
+                size="icon"
                 onClick={handleNotificationsClick}
-                className="relative flex items-center gap-1.5 text-xs px-2.5 mr-2"
+                className="relative h-12 w-12"
               >
-                <Icon name="Bell" size={26} />
+                <Icon name="Bell" size={28} />
                 {userData.notifications.filter(n => !n.read).length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
+                  <span className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
                     {userData.notifications.filter(n => !n.read).length}
                   </span>
                 )}
