@@ -52,6 +52,15 @@ const Index = () => {
     gender: 'Мужской',
     badges: ['Золото 2023', 'Серебро 2022'],
     progress: 75,
+    appointments: [
+      { id: 1, discipline: 'Бег 100м', date: '20.12.2024', time: '10:00', center: 'СЦ Энергия' },
+      { id: 2, discipline: 'Подтягивание', date: '22.12.2024', time: '14:00', center: 'СК Олимпийский' },
+    ],
+    notifications: [
+      { id: 1, text: 'Запись на испытание "Бег 100м" подтверждена', date: '10.12.2024', read: false },
+      { id: 2, text: 'Результаты испытания "Подтягивание" загружены', date: '08.12.2024', read: true },
+      { id: 3, text: 'Новый центр тестирования открыт рядом с вами', date: '05.12.2024', read: true },
+    ]
   };
 
   const currentStage = isAuthorized 
@@ -199,15 +208,35 @@ const Index = () => {
                 <p className="text-xs text-muted-foreground">Готов к труду и обороне</p>
               </div>
             </div>
-            {!isAuthorized && (
+            {!isAuthorized ? (
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setIsAuthorized(true)}
+                  className="flex items-center gap-2"
+                >
+                  <Icon name="LogIn" size={16} />
+                  Войти
+                </Button>
+                <Button 
+                  size="sm"
+                  onClick={() => setIsAuthorized(true)}
+                  className="flex items-center gap-2"
+                >
+                  <Icon name="UserPlus" size={16} />
+                  Регистрация
+                </Button>
+              </div>
+            ) : (
               <Button 
                 variant="outline" 
                 size="sm"
-                onClick={() => setIsAuthorized(true)}
+                onClick={() => setIsAuthorized(false)}
                 className="flex items-center gap-2"
               >
-                <Icon name="LogIn" size={16} />
-                Войти
+                <Icon name="LogOut" size={16} />
+                Выйти
               </Button>
             )}
           </div>
@@ -377,6 +406,86 @@ const Index = () => {
                     </div>
                   </div>
                 </Card>
+
+                <Card className="p-6">
+                  <h3 className="font-semibold mb-4 flex items-center gap-2">
+                    <Icon name="Calendar" size={20} className="text-primary" />
+                    Записи на испытания
+                  </h3>
+                  <div className="space-y-3">
+                    {userData.appointments.map(app => (
+                      <div key={app.id} className="p-3 bg-muted/50 rounded-lg">
+                        <div className="flex justify-between items-start mb-1">
+                          <p className="font-medium text-sm">{app.discipline}</p>
+                          <Badge variant="secondary" className="text-xs">{app.date}</Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground">{app.time} • {app.center}</p>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+
+                <Card className="p-6">
+                  <h3 className="font-semibold mb-4 flex items-center gap-2">
+                    <Icon name="Bell" size={20} className="text-primary" />
+                    Уведомления
+                    {userData.notifications.filter(n => !n.read).length > 0 && (
+                      <Badge variant="destructive" className="ml-auto">
+                        {userData.notifications.filter(n => !n.read).length}
+                      </Badge>
+                    )}
+                  </h3>
+                  <div className="space-y-3">
+                    {userData.notifications.map(notif => (
+                      <div key={notif.id} className={`p-3 rounded-lg border ${
+                        notif.read ? 'bg-muted/30 border-muted' : 'bg-blue-50 border-blue-200'
+                      }`}>
+                        <div className="flex items-start gap-2">
+                          {!notif.read && (
+                            <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5 flex-shrink-0"></div>
+                          )}
+                          <div className="flex-1">
+                            <p className="text-sm">{notif.text}</p>
+                            <p className="text-xs text-muted-foreground mt-1">{notif.date}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+
+                <Card className="p-6">
+                  <h3 className="font-semibold mb-4 flex items-center gap-2">
+                    <Icon name="User" size={20} className="text-primary" />
+                    Данные участника
+                  </h3>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between py-2 border-b">
+                      <span className="text-muted-foreground">ФИО:</span>
+                      <span className="font-medium">{userData.name}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b">
+                      <span className="text-muted-foreground">Дата рождения:</span>
+                      <span className="font-medium">{userData.birthDate}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b">
+                      <span className="text-muted-foreground">Возраст:</span>
+                      <span className="font-medium">{userData.age} лет</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b">
+                      <span className="text-muted-foreground">Пол:</span>
+                      <span className="font-medium">{userData.gender}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b">
+                      <span className="text-muted-foreground">Ступень:</span>
+                      <span className="font-medium">{userData.stage.name}</span>
+                    </div>
+                    <div className="flex justify-between py-2">
+                      <span className="text-muted-foreground">УИН:</span>
+                      <span className="font-medium">{userData.uin}</span>
+                    </div>
+                  </div>
+                </Card>
               </>
             ) : (
               <Card className="p-8 text-center">
@@ -385,10 +494,16 @@ const Index = () => {
                 <p className="text-sm text-muted-foreground mb-4">
                   Войдите через Госуслуги для доступа к личному кабинету
                 </p>
-                <Button onClick={() => setIsAuthorized(true)} className="gap-2">
-                  <Icon name="LogIn" size={18} />
-                  Войти через Госуслуги
-                </Button>
+                <div className="flex gap-3 justify-center">
+                  <Button onClick={() => setIsAuthorized(true)} className="gap-2">
+                    <Icon name="LogIn" size={18} />
+                    Войти
+                  </Button>
+                  <Button onClick={() => setIsAuthorized(true)} variant="outline" className="gap-2">
+                    <Icon name="UserPlus" size={18} />
+                    Регистрация
+                  </Button>
+                </div>
               </Card>
             )}
           </div>
