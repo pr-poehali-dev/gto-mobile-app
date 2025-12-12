@@ -58,6 +58,19 @@ const BookingTab = ({
             </div>
           </div>
 
+          <Card className="overflow-hidden mb-4">
+            <div className="w-full h-64 bg-muted relative">
+              <iframe
+                src={`https://yandex.ru/map-widget/v1/?ll=69.001914,61.004531&z=13&l=map${testCenters.map(c => `&pt=${c.coordinates[1]},${c.coordinates[0]},pm2rdm`).join('')}`}
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                allowFullScreen
+                style={{ position: 'relative' }}
+              />
+            </div>
+          </Card>
+
           {selectedCenter ? (
             <div className="space-y-4">
               <Button 
