@@ -30,10 +30,8 @@ const StandardsTab = ({
 }: StandardsTabProps) => {
   return (
     <div className="space-y-4 animate-fade-in">
-      {currentStage && (
-        <>
-          <Card className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10">
-            {isAuthorized ? (
+      <Card className="p-4 bg-gradient-to-r from-primary/10 to-secondary/10">
+        {isAuthorized ? (
               <div className="flex flex-col items-center justify-center gap-3">
                 <div className="flex items-center gap-2">
                   <Icon name="Target" size={20} className="text-primary" />
@@ -107,7 +105,7 @@ const StandardsTab = ({
                     </Select>
                   </div>
                 </div>
-                {selectedAge && (
+                {selectedAge && currentStage && (
                   <p className="text-sm text-muted-foreground">
                     {currentStage.name} • Возраст: {currentStage.ageRange}
                   </p>
@@ -116,6 +114,8 @@ const StandardsTab = ({
             )}
           </Card>
 
+      {currentStage && (
+        <>
           {(() => {
             const standards = getStandardsByStage(currentStage.number, isAuthorized ? 'male' : selectedGender);
             return (
