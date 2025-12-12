@@ -25,32 +25,35 @@ interface ProfileTabProps {
 const ProfileTab = ({ userData }: ProfileTabProps) => {
   return (
     <div className="space-y-4 animate-fade-in">
-      <Card className="p-6">
-        <div className="flex items-start gap-4">
-          <Avatar className="w-20 h-20">
+      <Card className="p-4">
+        <div className="flex flex-col items-center gap-4">
+          <Avatar className="w-24 h-24">
             <AvatarImage src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" />
             <AvatarFallback className="bg-primary text-primary-foreground text-2xl">
               {userData.name.split(' ').map(n => n[0]).join('')}
             </AvatarFallback>
           </Avatar>
-          <div className="flex-1">
-            <h2 className="text-xl font-bold mb-4">{userData.name}</h2>
+          <div className="w-full text-center">
+            <h2 className="text-xl font-bold mb-3">{userData.name}</h2>
+            <div className="font-semibold text-primary bg-primary/10 px-3 py-2 rounded-lg mb-4 inline-block">
+              {userData.stage.name} ({userData.stage.ageRange})
+            </div>
             <div className="space-y-2 text-sm">
-              <div className="font-semibold text-primary bg-primary/10 px-3 py-2 rounded-lg">
-                {userData.stage.name} ({userData.stage.ageRange})
+              <div className="flex justify-between py-1.5 border-b">
+                <span className="text-muted-foreground">Дата рождения:</span>
+                <span className="font-medium">{userData.birthDate}</span>
               </div>
-              <div className="grid grid-cols-[120px_1fr] gap-x-2 gap-y-1.5 px-1">
-                <span className="font-medium text-foreground">Дата рождения:</span>
-                <span className="text-muted-foreground">{userData.birthDate}</span>
-                
-                <span className="font-medium text-foreground">Возраст:</span>
-                <span className="text-muted-foreground">{userData.age} лет</span>
-                
-                <span className="font-medium text-foreground">Пол:</span>
-                <span className="text-muted-foreground">{userData.gender}</span>
-                
-                <span className="font-medium text-foreground">УИН:</span>
-                <span className="text-muted-foreground">{userData.uin}</span>
+              <div className="flex justify-between py-1.5 border-b">
+                <span className="text-muted-foreground">Возраст:</span>
+                <span className="font-medium">{userData.age} лет</span>
+              </div>
+              <div className="flex justify-between py-1.5 border-b">
+                <span className="text-muted-foreground">Пол:</span>
+                <span className="font-medium">{userData.gender}</span>
+              </div>
+              <div className="flex justify-between py-1.5">
+                <span className="text-muted-foreground">УИН:</span>
+                <span className="font-medium">{userData.uin}</span>
               </div>
             </div>
           </div>
@@ -91,12 +94,6 @@ const ProfileTab = ({ userData }: ProfileTabProps) => {
             <span className="text-sm">Подтягивание</span>
             <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-400 flex items-center gap-1">
               🥈 Серебро
-            </Badge>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm">Прыжок в длину</span>
-            <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-              В процессе
             </Badge>
           </div>
         </div>

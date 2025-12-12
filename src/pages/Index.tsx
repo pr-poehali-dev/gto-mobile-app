@@ -150,12 +150,7 @@ const Index = () => {
         <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
           <div className="flex items-center justify-between p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">ГТО</span>
-              </div>
-              <div>
-                <p className="text-xs text-muted-foreground leading-tight">Готов к труду<br/>и обороне</p>
-              </div>
+              <img src="https://cdn.poehali.dev/files/24.06.png" alt="ГТО" className="h-10" />
             </div>
             {!isAuthorized ? (
               <div className="flex gap-2">
@@ -269,8 +264,8 @@ const Index = () => {
                 activeTab === 'booking' ? 'text-primary bg-primary/10' : 'text-muted-foreground'
               }`}
             >
-              <Icon name="MapPin" size={24} />
-              <span className="text-xs">Центры</span>
+              <Icon name="Calendar" size={24} />
+              <span className="text-xs">Запись</span>
             </button>
             <button
               onClick={() => setActiveTab('profile')}
