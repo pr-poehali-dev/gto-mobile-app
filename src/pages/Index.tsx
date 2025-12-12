@@ -591,7 +591,6 @@ const Index = () => {
                     <>
                       <div className="space-y-3">
                         <h4 className="font-medium text-sm flex items-center gap-2">
-                          <Icon name="AlertCircle" size={16} className="text-primary" />
                           Обязательные испытания
                         </h4>
                         {standards.required.map((category: any, i: number) => (
@@ -604,12 +603,11 @@ const Index = () => {
                                 </Badge>
                               </div>
                             </div>
-                            <p className="text-xs text-muted-foreground mb-3">Выберите одну дисциплину:</p>
                             {category.options.map((option: any, j: number) => (
                               <div key={j} className="mb-3 last:mb-0">
                                 <p className="text-sm font-medium mb-2">{option.discipline}</p>
                                 <div className="grid grid-cols-3 gap-2 text-xs">
-                                  <div className="bg-yellow-50 rounded p-2 border border-yellow-200">
+                                  <div className="bg-yellow-50 rounded p-2 border-2 border-yellow-400 shadow-sm">
                                     <p className="text-yellow-700 font-medium mb-1">🥇 Золото</p>
                                     <p className="font-semibold text-yellow-900">{option.gold}</p>
                                   </div>
@@ -647,7 +645,7 @@ const Index = () => {
                               <div key={j} className="mb-3 last:mb-0">
                                 <p className="text-sm font-medium mb-2">{option.discipline}</p>
                                 <div className="grid grid-cols-3 gap-2 text-xs">
-                                  <div className="bg-yellow-50 rounded p-2 border border-yellow-200">
+                                  <div className="bg-yellow-50 rounded p-2 border-2 border-yellow-400 shadow-sm">
                                     <p className="text-yellow-700 font-medium mb-1">🥇 Золото</p>
                                     <p className="font-semibold text-yellow-900">{option.gold}</p>
                                   </div>
