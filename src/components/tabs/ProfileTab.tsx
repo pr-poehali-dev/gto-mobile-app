@@ -22,19 +22,12 @@ interface ProfileTabProps {
     }>;
   };
   onLogout?: () => void;
-  onGenderChange?: (gender: 'male' | 'female') => void;
 }
 
-const ProfileTab = ({ userData, onLogout, onGenderChange }: ProfileTabProps) => {
+const ProfileTab = ({ userData, onLogout }: ProfileTabProps) => {
   const handleLogout = () => {
     if (onLogout) {
       onLogout();
-    }
-  };
-
-  const handleGenderChange = (newGender: 'male' | 'female') => {
-    if (onGenderChange) {
-      onGenderChange(newGender);
     }
   };
   return (
@@ -66,26 +59,9 @@ const ProfileTab = ({ userData, onLogout, onGenderChange }: ProfileTabProps) => 
                 <span className="text-muted-foreground">Возраст:</span>
                 <span className="font-medium">{userData.age} лет</span>
               </div>
-              <div className="flex justify-between py-1.5 border-b items-center">
+              <div className="flex justify-between py-1.5 border-b">
                 <span className="text-muted-foreground">Пол:</span>
-                <div className="flex gap-2">
-                  <Button
-                    variant={userData.gender === 'Мужской' ? 'default' : 'outline'}
-                    size="sm"
-                    className="h-7 px-3 text-xs"
-                    onClick={() => handleGenderChange('male')}
-                  >
-                    Мужской
-                  </Button>
-                  <Button
-                    variant={userData.gender === 'Женский' ? 'default' : 'outline'}
-                    size="sm"
-                    className="h-7 px-3 text-xs"
-                    onClick={() => handleGenderChange('female')}
-                  >
-                    Женский
-                  </Button>
-                </div>
+                <span className="font-medium">{userData.gender}</span>
               </div>
               <div className="flex justify-between py-1.5">
                 <span className="text-muted-foreground">УИН:</span>
