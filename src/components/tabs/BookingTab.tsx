@@ -1,6 +1,7 @@
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import YandexMap from '@/components/YandexMap';
 
 interface TestCenter {
   id: number;
@@ -59,16 +60,14 @@ const BookingTab = ({
           </div>
 
           <Card className="overflow-hidden mb-4">
-            <div className="w-full h-64 bg-muted relative">
-              <iframe
-                src={`https://yandex.ru/map-widget/v1/?ll=37.622504,55.753544&z=11&l=map${testCenters.map(c => `&pt=${c.coordinates[1]},${c.coordinates[0]},pm2rdm`).join('')}`}
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                allowFullScreen
-                style={{ position: 'relative' }}
-              />
-            </div>
+            <YandexMap 
+              centers={testCenters.filter(center => 
+                center.name.toLowerCase().includes(centerSearch.toLowerCase()) ||
+                center.address.toLowerCase().includes(centerSearch.toLowerCase())
+              )}
+              onCenterClick={(center) => setSelectedCenter(center.id)}
+              height="256px"
+            />
           </Card>
 
           {selectedCenter ? (
@@ -88,16 +87,11 @@ const BookingTab = ({
                 return (
                   <>
                     <Card className="overflow-hidden">
-                      <div className="w-full h-64 bg-muted relative">
-                        <iframe
-                          src={`https://yandex.ru/map-widget/v1/?ll=${center.coordinates[1]},${center.coordinates[0]}&z=15&l=map&pt=${center.coordinates[1]},${center.coordinates[0]},pm2rdm`}
-                          width="100%"
-                          height="100%"
-                          frameBorder="0"
-                          allowFullScreen
-                          style={{ position: 'relative' }}
-                        />
-                      </div>
+                      <YandexMap 
+                        centers={[center]}
+                        selectedCenter={center}
+                        height="256px"
+                      />
                     </Card>
                     <Card className="p-6">
                       <h2 className="text-2xl font-bold mb-4">{center.name}</h2>
