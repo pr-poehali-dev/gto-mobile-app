@@ -176,9 +176,9 @@ const Index = () => {
                 variant="ghost" 
                 size="icon"
                 onClick={handleNotificationsClick}
-                className="relative h-14 w-14"
+                className="relative h-20 w-20"
               >
-                <Icon name="Bell" size={40} />
+                <Icon name="Bell" size={80} />
                 {userData.notifications.filter(n => !n.read).length > 0 && (
                   <span className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">
                     {userData.notifications.filter(n => !n.read).length}
