@@ -11,6 +11,7 @@ interface TestCenter {
   phone: string;
   schedule: string;
   coordinates: [number, number];
+  disciplines?: string[];
 }
 
 interface BookingTabProps {
@@ -126,6 +127,24 @@ const BookingTab = ({
                         <p className="text-sm text-muted-foreground">{center.distance}</p>
                       </div>
                     </div>
+                    {center.disciplines && center.disciplines.length > 0 && (
+                      <div className="flex items-start gap-3">
+                        <Icon name="Activity" size={20} className="text-primary mt-0.5 flex-shrink-0" />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium mb-2">Доступные дисциплины</p>
+                          <div className="flex flex-wrap gap-2">
+                            {center.disciplines.map((discipline, idx) => (
+                              <span 
+                                key={idx} 
+                                className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-md"
+                              >
+                                {discipline}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   
                   {isAuthorized ? (

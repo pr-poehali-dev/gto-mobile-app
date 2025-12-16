@@ -107,7 +107,8 @@ const Index = () => {
       distance: '1.2 км',
       phone: '+7 (495) 645-01-11',
       schedule: 'Пн-Пт: 8:00-20:00, Сб-Вс: 9:00-18:00',
-      coordinates: [55.787448, 37.599194] as [number, number]
+      coordinates: [55.787448, 37.599194] as [number, number],
+      disciplines: ['Бег 100м', 'Бег 3000м', 'Подтягивание', 'Прыжок в длину', 'Наклон вперед', 'Отжимание']
     },
     { 
       id: 2, 
@@ -116,7 +117,8 @@ const Index = () => {
       distance: '2.5 км',
       phone: '+7 (495) 780-08-08',
       schedule: 'Ежедневно: 7:00-22:00',
-      coordinates: [55.715765, 37.553604] as [number, number]
+      coordinates: [55.715765, 37.553604] as [number, number],
+      disciplines: ['Бег 60м', 'Бег 2000м', 'Челночный бег', 'Метание мяча', 'Плавание 50м', 'Стрельба']
     },
     { 
       id: 3, 
@@ -125,7 +127,8 @@ const Index = () => {
       distance: '3.8 км',
       phone: '+7 (495) 161-26-26',
       schedule: 'Пн-Вс: 6:00-23:00',
-      coordinates: [55.812075, 37.736275] as [number, number]
+      coordinates: [55.812075, 37.736275] as [number, number],
+      disciplines: ['Бег 30м', 'Бег 1500м', 'Подтягивание', 'Поднимание туловища', 'Прыжки на скакалке']
     },
   ];
 
