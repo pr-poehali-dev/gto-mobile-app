@@ -59,16 +59,18 @@ const BookingTab = ({
         </div>
       </div>
 
-      <Card className="overflow-hidden mb-4">
-        <YandexMap 
-          centers={testCenters.filter(center => 
-            center.name.toLowerCase().includes(centerSearch.toLowerCase()) ||
-            center.address.toLowerCase().includes(centerSearch.toLowerCase())
-          )}
-          onCenterClick={(center) => setSelectedCenter(center.id)}
-          height="256px"
-        />
-      </Card>
+      {!selectedCenter && (
+        <Card className="overflow-hidden mb-4">
+          <YandexMap 
+            centers={testCenters.filter(center => 
+              center.name.toLowerCase().includes(centerSearch.toLowerCase()) ||
+              center.address.toLowerCase().includes(centerSearch.toLowerCase())
+            )}
+            onCenterClick={(center) => setSelectedCenter(center.id)}
+            height="256px"
+          />
+        </Card>
+      )}
 
       {selectedCenter ? (
         <div className="space-y-4">
@@ -86,7 +88,7 @@ const BookingTab = ({
             if (!center) return null;
             return (
               <>
-                <Card className="overflow-hidden">
+                <Card className="overflow-hidden mb-4">
                   <YandexMap 
                     centers={[center]}
                     selectedCenter={center}
