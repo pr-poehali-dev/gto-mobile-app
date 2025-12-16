@@ -297,40 +297,50 @@ const createStandards = (stageNumber: number, gender: 'male' | 'female'): StageS
           ]
         },
         {
-          name: 'Силовые возможности',
-          type: 'Обязательное',
-          options: [
-            { discipline: g === 'male' ? 'Подтягивание' : 'Отжимание', gold: g === 'male' ? '13 раз' : '14 раз', silver: g === 'male' ? '10 раз' : '11 раз', bronze: g === 'male' ? '7 раз' : '8 раз' },
-            { discipline: 'Рывок гири 16 кг', gold: g === 'male' ? '35 раз' : '25 раз', silver: g === 'male' ? '25 раз' : '18 раз', bronze: g === 'male' ? '18 раз' : '12 раз' }
-          ]
-        },
-        {
           name: 'Выносливость',
           type: 'Обязательное',
           options: [
-            { discipline: 'Бег 2 км', gold: g === 'male' ? '—' : '10:20 мин', silver: g === 'male' ? '—' : '11:35 мин', bronze: g === 'male' ? '—' : '12:40 мин' },
-            { discipline: 'Бег 3 км', gold: g === 'male' ? '13:00 мин' : '—', silver: g === 'male' ? '14:30 мин' : '—', bronze: g === 'male' ? '15:40 мин' : '—' }
+            { discipline: 'Бег 3 км', gold: g === 'male' ? '12:30 мин' : '—', silver: g === 'male' ? '14:20 мин' : '—', bronze: g === 'male' ? '15:20 мин' : '—' },
+            { discipline: 'Кросс 5 км', gold: g === 'male' ? '22:00 мин' : '—', silver: g === 'male' ? '25:30 мин' : '—', bronze: g === 'male' ? '27:00 мин' : '—' },
+            { discipline: 'Лыжная гонка 5 км', gold: g === 'male' ? '22:00 мин' : '—', silver: g === 'male' ? '26:00 мин' : '—', bronze: g === 'male' ? '28:00 мин' : '—' },
+            { discipline: 'Бег 2 км', gold: g === 'male' ? '—' : '10:20 мин', silver: g === 'male' ? '—' : '11:35 мин', bronze: g === 'male' ? '—' : '12:40 мин' }
+          ]
+        },
+        {
+          name: 'Гибкость',
+          type: 'Обязательное',
+          options: [{ discipline: 'Наклон вперед из положения стоя на гимнастической скамье', gold: g === 'male' ? '+12 см' : '+16 см', silver: g === 'male' ? '+7 см' : '+11 см', bronze: g === 'male' ? '+5 см' : '+8 см' }]
+        },
+        {
+          name: 'Сила',
+          type: 'Обязательное',
+          options: [
+            { discipline: 'Подтягивание из виса на высокой перекладине', gold: g === 'male' ? '14 раз' : '—', silver: g === 'male' ? '10 раз' : '—', bronze: g === 'male' ? '6 раз' : '—' },
+            { discipline: 'Сгибание и разгибание рук в упоре лёжа на полу', gold: g === 'male' ? '40 раз' : '14 раз', silver: g === 'male' ? '25 раз' : '11 раз', bronze: g === 'male' ? '21 раз' : '8 раз' },
+            { discipline: 'Рывок гири 16 кг', gold: g === 'male' ? '41 раз' : '25 раз', silver: g === 'male' ? '24 раз' : '18 раз', bronze: g === 'male' ? '18 раз' : '12 раз' }
           ]
         }
       ],
       choice: [
         {
-          name: 'Скоростно-силовые',
+          name: 'Скоростно-силовые возможности',
           type: 'По выбору',
           options: [
-            { discipline: 'Прыжок в длину', gold: g === 'male' ? '230 см' : '195 см', silver: g === 'male' ? '215 см' : '180 см', bronze: g === 'male' ? '200 см' : '170 см' },
-            { discipline: 'Метание спортивного снаряда', gold: g === 'male' ? '37 м' : '23 м', silver: g === 'male' ? '33 м' : '20 м', bronze: g === 'male' ? '30 м' : '17 м' }
+            { discipline: 'Прыжок в длину с места толчком двумя ногами', gold: g === 'male' ? '239 см' : '195 см', silver: g === 'male' ? '223 см' : '180 см', bronze: g === 'male' ? '202 см' : '170 см' },
+            { discipline: 'Поднимание туловища из положения лежа на спине (кол-во раз за 1 мин)', gold: g === 'male' ? '47 раз' : '—', silver: g === 'male' ? '36 раз' : '—', bronze: g === 'male' ? '29 раз' : '—' }
           ]
-        },
-        {
-          name: 'Гибкость',
-          type: 'По выбору',
-          options: [{ discipline: 'Наклон вперед', gold: g === 'male' ? '+13 см' : '+16 см', silver: g === 'male' ? '+8 см' : '+11 см', bronze: g === 'male' ? '+6 см' : '+8 см' }]
         },
         {
           name: 'Прикладные навыки',
           type: 'По выбору',
-          options: [{ discipline: 'Плавание 50 м', gold: g === 'male' ? '50 сек' : '1:05 мин', silver: g === 'male' ? '1:00 мин' : '1:15 мин', bronze: g === 'male' ? '1:10 мин' : '1:28 мин' }]
+          options: [
+            { discipline: 'Метание спортивного снаряда 700 г', gold: g === 'male' ? '38 м' : '23 м', silver: g === 'male' ? '36 м' : '20 м', bronze: g === 'male' ? '32 м' : '17 м' },
+            { discipline: 'Плавание 50 м', gold: g === 'male' ? '0:53 мин' : '1:05 мин', silver: g === 'male' ? '1:03 мин' : '1:15 мин', bronze: g === 'male' ? '1:17 мин' : '1:28 мин' },
+            { discipline: 'Стрельба из пневматической винтовки с открытым прицелом (очки)', gold: g === 'male' ? '25' : '—', silver: g === 'male' ? '20' : '—', bronze: g === 'male' ? '15' : '—' },
+            { discipline: 'Стрельба из пневматической винтовки с диоптрическим прицелом (очки)', gold: g === 'male' ? '30' : '—', silver: g === 'male' ? '25' : '—', bronze: g === 'male' ? '18' : '—' },
+            { discipline: 'Самозащита без оружия (очки)', gold: g === 'male' ? '26-30' : '—', silver: g === 'male' ? '21-25' : '—', bronze: g === 'male' ? '15-20' : '—' },
+            { discipline: 'Туристский поход с проверкой навыков, не менее 15 км (кол-во навыков)', gold: g === 'male' ? '7' : '—', silver: g === 'male' ? '5' : '—', bronze: g === 'male' ? '3' : '—' }
+          ]
         }
       ]
     }),
