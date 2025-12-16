@@ -315,17 +315,17 @@ const createStandards = (stageNumber: number, gender: 'male' | 'female'): StageS
       ],
       choice: [
         {
-          name: 'Гибкость',
-          type: 'По выбору',
-          options: [{ discipline: 'Наклон вперед', gold: g === 'male' ? '+13 см' : '+16 см', silver: g === 'male' ? '+8 см' : '+11 см', bronze: g === 'male' ? '+6 см' : '+8 см' }]
-        },
-        {
           name: 'Скоростно-силовые',
           type: 'По выбору',
           options: [
             { discipline: 'Прыжок в длину', gold: g === 'male' ? '230 см' : '195 см', silver: g === 'male' ? '215 см' : '180 см', bronze: g === 'male' ? '200 см' : '170 см' },
             { discipline: 'Метание спортивного снаряда', gold: g === 'male' ? '37 м' : '23 м', silver: g === 'male' ? '33 м' : '20 м', bronze: g === 'male' ? '30 м' : '17 м' }
           ]
+        },
+        {
+          name: 'Гибкость',
+          type: 'По выбору',
+          options: [{ discipline: 'Наклон вперед', gold: g === 'male' ? '+13 см' : '+16 см', silver: g === 'male' ? '+8 см' : '+11 см', bronze: g === 'male' ? '+6 см' : '+8 см' }]
         },
         {
           name: 'Прикладные навыки',

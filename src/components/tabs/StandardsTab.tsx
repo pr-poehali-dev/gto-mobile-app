@@ -14,6 +14,7 @@ interface StandardsTabProps {
   ageRanges: Array<{ label: string; minAge: number; maxAge: number }>;
   selectedStageNumber?: number | null;
   setSelectedStageNumber?: (stage: number | null) => void;
+  userGender?: 'male' | 'female';
 }
 
 const StandardsTab = ({
@@ -27,6 +28,7 @@ const StandardsTab = ({
   ageRanges,
   selectedStageNumber,
   setSelectedStageNumber,
+  userGender = 'male',
 }: StandardsTabProps) => {
   return (
     <div className="space-y-4 animate-fade-in">
@@ -117,7 +119,7 @@ const StandardsTab = ({
       {currentStage && (
         <>
           {(() => {
-            const standards = getStandardsByStage(currentStage.number, isAuthorized ? 'male' : selectedGender);
+            const standards = getStandardsByStage(currentStage.number, isAuthorized ? userGender : selectedGender);
             return (
               <>
                 <div className="space-y-3">
@@ -137,14 +139,7 @@ const StandardsTab = ({
                           <h4 className="font-medium">{category.name}</h4>
                         </div>
                       </div>
-                      {category.options.length > 1 && (
-                        <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-2">
-                          <Icon name="Info" size={16} className="text-blue-600 flex-shrink-0 mt-0.5" />
-                          <p className="text-xs text-blue-700">
-                            Необходимо выбрать одно из {category.options.length} испытаний
-                          </p>
-                        </div>
-                      )}
+
                       {category.options.map((option: any, j: number) => (
                         <div key={j} className="mb-3 last:mb-0">
                           <p className="text-sm font-medium mb-2">{option.discipline}</p>
@@ -185,14 +180,7 @@ const StandardsTab = ({
                           <h4 className="font-medium">{category.name}</h4>
                         </div>
                       </div>
-                      {category.options.length > 1 && (
-                        <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-2">
-                          <Icon name="Info" size={16} className="text-blue-600 flex-shrink-0 mt-0.5" />
-                          <p className="text-xs text-blue-700">
-                            Необходимо выбрать одно из {category.options.length} испытаний
-                          </p>
-                        </div>
-                      )}
+
                       {category.options.map((option: any, j: number) => (
                         <div key={j} className="mb-3 last:mb-0">
                           <p className="text-sm font-medium mb-2">{option.discipline}</p>

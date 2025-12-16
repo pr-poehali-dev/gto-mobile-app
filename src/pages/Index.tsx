@@ -14,6 +14,7 @@ const Index = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [selectedAge, setSelectedAge] = useState<number | null>(null);
   const [selectedGender, setSelectedGender] = useState<'male' | 'female'>('male');
+  const [userGender, setUserGender] = useState<'male' | 'female'>('male');
   const [selectedStageNumber, setSelectedStageNumber] = useState<number | null>(null);
   const [showAllStages, setShowAllStages] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -74,7 +75,7 @@ const Index = () => {
     age: 29,
     stage: getStageByAge(29),
     uin: '1234567890',
-    gender: 'Мужской',
+    gender: userGender === 'male' ? 'Мужской' : 'Женский',
     badges: ['Золото 2023', 'Серебро 2022'],
     progress: 75,
     appointments: [
@@ -200,7 +201,11 @@ const Index = () => {
             <MainTab isAuthorized={isAuthorized} news={news} />
           ) : activeTab === 'profile' ? (
             isAuthorized ? (
-              <ProfileTab userData={userData} onLogout={() => setIsAuthorized(false)} />
+              <ProfileTab 
+                userData={userData} 
+                onLogout={() => setIsAuthorized(false)} 
+                onGenderChange={(gender) => setUserGender(gender)}
+              />
             ) : (
               <div className="text-center p-8">
                 <Icon name="User" size={48} className="mx-auto mb-4 text-muted-foreground" />
@@ -226,6 +231,7 @@ const Index = () => {
               ageRanges={ageRanges}
               selectedStageNumber={selectedStageNumber}
               setSelectedStageNumber={setSelectedStageNumber}
+              userGender={userGender}
             />
           ) : activeTab === 'booking' ? (
             <BookingTab
